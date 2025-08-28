@@ -105,5 +105,12 @@ public class playBoard {
                 }
         }
     }
-    //--------//
+    public void resetBoard(){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = Cells.IS_BLANK;
+            }
+        }
+    }
+    
 }
