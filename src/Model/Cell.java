@@ -2,82 +2,75 @@ package Model;
 
 public class Cell {
 
-	private boolean isFlagged;
-	private boolean isPainted;
+	private CellStates CurrentState;
+	public enum CellStates{ BLANK, FLAGGED, PAINTED }
 	
-	public Cell() {
+	public Cell(CellStates state) {
 		
-		this.isFlagged = false;
-		this.isPainted = false;
-		
-	}
-
-	public Cell(boolean paintedOrFlaggedCell) {
-
-		startCellState(paintedOrFlaggedCell);
+		startCellState(state);
 		
 	}
 	
-	private void startCellState(boolean paintedOrFlaggedCell) {
+	private void startCellState(CellStates state) {
+
+		initializeCell(state);
 		
-		if(paintedOrFlaggedCell)
+	}
+	
+	private void initializeCell(CellStates state) {
+		
+		switch(state) {
+		
+		case BLANK:
+			establishCellHowBlank();
+			break;
+		case FLAGGED:
+			establishCellHowFlagged();
+			break;
+		case PAINTED:
 			establishCellHowPainted();
-		else establishCellHowFlagged();
+			break;
+	
+		}
+	}
+	
+	public void establishCellHowBlank() {
+
+		CurrentState = CellStates.BLANK;
 		
 	}
 	
-	private void establishCellHowFlagged() {
+	public void establishCellHowFlagged() {
 
-		isFlagged = true;
-		isPainted= false;
+		CurrentState = CellStates.FLAGGED;
 		
 	}
 	
-	private void establishCellHowPainted() {
+	public void establishCellHowPainted() {
 
-		isFlagged = false;
-		isPainted= true;
+		CurrentState = CellStates.PAINTED;
 		
 	}
 	
 	public boolean isBlank() {
 
-		if(isFlagged == false && isPainted == false)
-			return true;
-		else return false;
+		return CurrentState.equals(CellStates.BLANK);
 		
 	}
 	
 	public boolean isFlagged() {
 		
-		return isFlagged;
+		return CurrentState.equals(CellStates.FLAGGED);
 		
 	}
 	
 	public boolean isPainted() {
-		
-		return isPainted;
+
+		return CurrentState.equals(CellStates.PAINTED);
 		
 	}
 	
-	public void markWithFlag() {
-
-		isPainted = false;
-		isFlagged = true;
-		
-	}
-	
-	public void markWithBlack() {
-
-		isFlagged = false;
-		isPainted = true;
-		
-	}
-	
-	public void markWithBlank() {
-
-		isFlagged = false;
-		isPainted = false;
-		
+	public String toString() {
+		return CurrentState.toString();
 	}
 }

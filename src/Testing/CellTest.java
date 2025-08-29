@@ -1,6 +1,8 @@
 package Testing;
 
 import Model.Cell;
+import Model.Cell.CellStates;
+
 import org.junit.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,15 +13,14 @@ public class CellTest {
 	@Before
 	public void init() {
 		
-		blankCell = new Cell();
+		blankCell = new Cell(CellStates.BLANK);
 		
 	}
-	
 	
 	@Test
 	public void createInBlankCellTest() {
 		
-		Cell testCell = new Cell();
+		Cell testCell = new Cell(CellStates.BLANK);
 		
 		assertTrue(testCell.isBlank());
 		
@@ -28,7 +29,7 @@ public class CellTest {
 	@Test
 	public void createPaintedCellTest() {
 		
-		Cell testCell = new Cell(true);
+		Cell testCell = new Cell(CellStates.PAINTED);
 		
 		assertTrue(testCell.isPainted());
 		
@@ -37,32 +38,25 @@ public class CellTest {
 	@Test
 	public void createFlaggedCellTest() {
 		
-		Cell testCell = new Cell(false);
+		Cell testCell = new Cell(CellStates.FLAGGED);
 		
 		assertTrue(testCell.isFlagged());
 		
 	}	
 
 	@Test
-	public void markCellWithFlagTrueTest() {
+	public void markCellWithFlagTest() {
 		
-		blankCell.markWithFlag();
+		blankCell.establishCellHowFlagged();
 
 		assertTrue(blankCell.isFlagged());
-		
-	}
-	
-	@Test
-	public void markCellWithFlagFalseTest() {
-
-		assertFalse(blankCell.isPainted());
 		
 	}
 
 	@Test
 	public void markCellWithBlackTest() {
 		
-		blankCell.markWithBlack();
+		blankCell.establishCellHowPainted();
 		
 		assertTrue(blankCell.isPainted());
 		
@@ -71,7 +65,7 @@ public class CellTest {
 	@Test
 	public void markCellWithBlankTest() {
 		
-		blankCell.markWithBlank();
+		blankCell.establishCellHowBlank();
 
 		assertTrue(blankCell.isBlank());
 	}
