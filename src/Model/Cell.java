@@ -12,12 +12,15 @@ public class Cell {
 	}
 	
 	private void startCellState(CellStates state) {
-
+		
 		initializeCell(state);
 		
 	}
 	
-	private void initializeCell(CellStates state) {
+	private void initializeCell(CellStates state) throws IllegalArgumentException {
+		
+		if(state == null)
+			throw new IllegalArgumentException("You cannot instantiate a Cell as null. The parameter 'state' was: " + state);
 		
 		switch(state) {
 		
