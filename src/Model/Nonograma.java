@@ -3,7 +3,6 @@ package Model;
 public class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
-	private PlayboardSingleton initialGameLevels;
 	private DifficultyLevels currentDifficulty;
 	public enum DifficultyLevels { EASY, NORMAL, HARD};
 	
