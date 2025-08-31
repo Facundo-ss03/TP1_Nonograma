@@ -3,14 +3,22 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class playBoard {
+public class PlayBoard {
     enum Cells { IS_PAINTED, IS_X, IS_BLANK }
     private Cells[][] board;
-
+    private int size;
     
-    public playBoard(int size) {
+    public PlayBoard(int size) {
+        this.size = size;
         createBlankBoard(size);
     }
+
+    public enum Difficulty {
+    EASY(5), MEDIUM(10), HARD(15);   // remember to use these keywords on the visual interface tomatch XD
+    private final int size;
+    Difficulty(int size) { this.size = size; }
+    public int getSize() { return size; }
+}
 
     private void createBlankBoard(int size) {
         board = new Cells[size][size];
@@ -113,4 +121,7 @@ public class playBoard {
         }
     }
     
+    public int getSize(){
+        return size;
+    }
 }
