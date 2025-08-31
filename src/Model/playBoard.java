@@ -1,4 +1,4 @@
-package Testing;
+package Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,13 +101,13 @@ public class playBoard {
     public void initializeRandom() {
         for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[i].length; j++) {
-                    board[i][j] = Math.random() < 0.5 ? Cells.IS_PAINTED : Cell.IS_X;
+                    board[i][j] = Math.random() < 0.5 ? Cells.IS_PAINTED : Cells.IS_X;
                 }
         }
     }
     public void resetBoard(){
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 board[i][j] = Cells.IS_BLANK;
             }
         }
