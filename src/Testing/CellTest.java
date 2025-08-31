@@ -4,7 +4,10 @@ import Model.Cell;
 import Model.Cell.CellStates;
 
 import org.junit.*;
+
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 public class CellTest {
 
@@ -14,6 +17,13 @@ public class CellTest {
 	public void init() {
 		
 		blankCell = new Cell(CellStates.BLANK);
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void createNullCellTest() {
+
+		Cell testCell = new Cell(null);
 		
 	}
 	

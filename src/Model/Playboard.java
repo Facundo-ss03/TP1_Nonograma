@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 public class Playboard {
 
-	private CellsMap cellsMap;
+	private CellsGrid solutionCellsGrid;
+	private CellsGrid cellsGridInBlank;
 	private ArrayList<Integer> rowHints;
 	private ArrayList<Integer> columnHints;
 	
 	public Playboard(int size) {
 
-		cellsMap = new CellsMap(size);
+		solutionCellsGrid = new CellsGrid(size);
+		cellsGridInBlank = CellsGrid.createInBlankCopyOfCellsGrid(solutionCellsGrid);
 		
 	}
 	
 	public String toString() {
-		return cellsMap.toString();
+		return solutionCellsGrid.toString();
 	}
 }

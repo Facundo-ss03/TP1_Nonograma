@@ -3,20 +3,38 @@ package Model;
 public class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
-	private Playboard solutionPlayboard;
 	private PlayboardSingleton initialGameLevels;
+	private DifficultyLevels currentDifficulty;
+	public enum DifficultyLevels { EASY, NORMAL, HARD};
 	
-	public Nonograma() {
+	public Nonograma(DifficultyLevels difficulty) {
 
-		this.currentLevel = new Playboard(5);		
-		this.solutionPlayboard = Playboard.createSolutionOfPlayboard(currentLevel);
+		this.currentDifficulty = difficulty;
+		
+		createPlayboardAccordingToDifficulty();
 		
 		
 	}
 	
+	private void createPlayboardAccordingToDifficulty() {
+
+		switch(currentDifficulty){
+
+		case EASY:
+			currentLevel = new Playboard(10);
+			break;
+		case NORMAL:
+			currentLevel = new Playboard(15);
+			break;
+		case HARD:
+			currentLevel = new Playboard(20);
+			break;
+		}
+	}
+	
 	@Override
-	public void establishDifficultyLevel(int difficultyLevel) {
-		// TODO Auto-generated method stub
+	public void changeDifficultyLevel(DifficultyLevels difficulty) {
+
 		
 	}
 

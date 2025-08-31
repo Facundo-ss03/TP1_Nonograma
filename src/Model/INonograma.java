@@ -1,8 +1,10 @@
 package Model;
 
+import Model.Nonograma.DifficultyLevels;
+
 public interface INonograma {
 
-	public void establishDifficultyLevel(int difficultyLevel);
+	public void changeDifficultyLevel(DifficultyLevels difficulty);
 	
 	public int askCorrectHint();
 	
