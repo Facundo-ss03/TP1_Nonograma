@@ -1,8 +1,8 @@
-package Model;
+/*package Model;
 
 public class Nonogram {
-    private PlayBoard solutionBoard;
-    private PlayBoard playerBoard;
+    private Playboard solutionBoard;
+    private Playboard playerBoard;
     private GameState currentState;
 
     public enum GameState {
@@ -14,10 +14,10 @@ public class Nonogram {
     }
 
     public void startGame(int size) {
-        solutionBoard = new PlayBoard(size);
+        solutionBoard = new Playboard(size);
         solutionBoard.initializeRandom(); // Or load from file for real puzzles
 
-        playerBoard = new PlayBoard(size); // Starts blank
+        playerBoard = new Playboard(size); // Starts blank
         currentState = GameState.PLAYING;
     }
 
@@ -59,3 +59,4 @@ public class Nonogram {
     }
 
 }
+*/
