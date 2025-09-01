@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import Model.Cell.CellStates;
@@ -43,8 +44,68 @@ public class CellsGrid {
 				cellsSet[row] = fillRowWithBlackCells();
 			}
 		}
+		
+		fixColumnChains();
 	}
 	
+	///////
+	private void fixColumnChains() {
+	    int size = cellsSet.length;
+
+	    for (int col = 0; col < size; col++) {
+	        ArrayList<Integer> blackIndices = new ArrayList<>();
+	        for (int row = 0; row < size; row++) {
+	            if (cellsSet[row][col].isPainted()) blackIndices.add(row);
+	        }
+
+	        int blockCount = countBlocksInColumn(col);
+
+	        if (blockCount > 2) {
+	            // Reducir bloques: eliminar celdas negras intermedias
+	            int excess = blockCount - 2;
+	            for (int i = 1; i < blackIndices.size() - 1 && excess > 0; i++) {
+	                int prev = blackIndices.get(i - 1);
+	                int curr = blackIndices.get(i);
+	                int next = blackIndices.get(i + 1);
+
+	                // Si hay separación, podemos eliminar el bloque
+	                if (curr - prev > 1 && next - curr > 1) {
+	                	cellsSet[curr][col].establishCellHowBlank();
+	                    excess--;
+	                }
+	            }
+	        } else if (blockCount < 2) {
+	            // Agregar bloques: buscar espacio libre
+	            for (int row = 0; row < size && blockCount < 2; row++) {
+	                if (!cellsSet[row][col].isPainted() &&
+	                    (row == 0 || !cellsSet[row - 1][col].isPainted()) &&
+	                    (row == size - 1 || !cellsSet[row + 1][col].isPainted())) {
+	                	cellsSet[row][col].isPainted();
+	                    blockCount++;
+	                }
+	            }
+	        }
+	    }
+	}
+
+	private int countBlocksInColumn(int col) {
+	    int count = 0;
+	    boolean inBlock = false;
+	    for (int row = 0; row < cellsSet.length; row++) {
+	        if (cellsSet[row][col].isPainted()) {
+	            if (!inBlock) {
+	                count++;
+	                inBlock = true;
+	            }
+	        } else {
+	            inBlock = false;
+	        }
+	    }
+	    return count;
+	}
+
+	
+	///////
 	private Cell[] fillRowWithBlackCells() {
 		
 		int minimalSeparation = 1;
