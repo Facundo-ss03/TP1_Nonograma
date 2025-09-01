@@ -16,6 +16,14 @@ public class Playboard {
 		
 	}
 	
+	public int[] getPaintedCellCoordinate() {
+		
+		
+		
+		return new int[2];
+		
+	}
+	
 	public String toString() {
 		return solutionCellsGrid.toString();
 	}

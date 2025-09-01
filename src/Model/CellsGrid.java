@@ -6,7 +6,7 @@ import Model.Cell.CellStates;
 
 public class CellsGrid {
 
-	private Cell[][] cellsMap;
+	private Cell[][] cellsSet;
 	private Random generator;
 	
 	public CellsGrid(int size) {
@@ -21,45 +21,109 @@ public class CellsGrid {
 	
 	private CellsGrid(Cell[][] voidCellsGrid) {
 		
-		this.cellsMap = voidCellsGrid;
+		this.cellsSet = voidCellsGrid;
 		
 	}
 		
 	public void initializeCellsGrid(int size) {
 		
-		boolean[][] baseStructure = createBaseAleatoryBooleanStructure(size);
-		replaceBooleanStructureForStartedCells(baseStructure);
+		//boolean[][] baseStructure = createBaseAleatoryBooleanStructure(size);
+		//replaceBooleanStructureForStartedCells(baseStructure);
+
+		cellsSet = new Cell[size][size];
+		createAleatoryCellsStructure();
 		
 	}
 	
-	public static CellsGrid createInBlankCopyOfCellsGrid(CellsGrid originalGrid) {
+	private void createAleatoryCellsStructure() {
+		
+		while(!haveBlankOrBlackColumn()) {
 
-		int gridLength = originalGrid.cellsMap.length;
-		Cell[][] cellsGrid = new Cell[gridLength][gridLength];
-		
-		for(int row = 0; row < gridLength; row++)
-			for(int column = 0; column < gridLength; column++)
-				cellsGrid[row][column] = new Cell(CellStates.BLANK);
-		
-		return new CellsGrid(cellsGrid);
+			for (int row = 0; row < cellsSet.length; row++) {
+				cellsSet[row] = fillRowWithBlackCells();
+			}
+		}
 	}
+	
+	private Cell[] fillRowWithBlackCells() {
+		
+		int minimalSeparation = 1;
+    	Cell[] filledRow = new Cell[cellsSet.length];
+
+        int firstPaintedChainLength = calculatePaintedChainLength(cellsSet.length, minimalSeparation);
+        int secondPaintedChainLength = calculatePaintedChainLength(cellsSet.length, minimalSeparation);
+        
+        int startLimit = cellsSet.length - calculateTotalSpaceOccupiedForPaintedCellsChains(firstPaintedChainLength, secondPaintedChainLength, minimalSeparation);
+
+        int startOfFirstChain = generateRandomStartPosition(startLimit + minimalSeparation);
+        int finalOfFirstChain = startOfFirstChain + firstPaintedChainLength;
+        
+        int startOfSecondChain = finalOfFirstChain + generateRandomStartPosition(cellsSet.length - (finalOfFirstChain + secondPaintedChainLength) + minimalSeparation);
+
+        filledRow = setCellsToBlack(filledRow, startOfFirstChain, firstPaintedChainLength);
+        filledRow = setCellsToBlack(filledRow, startOfSecondChain, secondPaintedChainLength);
+
+        return filledRow;
+		
+	}
+	
+	private Cell[] setCellsToBlack(Cell[] row, int startPaintedChain, int paintedChainLength) {
+
+		for(int column = startPaintedChain; column < startPaintedChain + paintedChainLength; column++) {
+			
+			row[column] = new Cell(CellStates.PAINTED);
+		}
+		
+		return row;
+	}
+	
+	private boolean haveBlankOrBlackColumn() {
+
+		if(cellsSet == null) return false;
+		
+		boolean haveBlackCellInColumn;
+		boolean haveBlankCellInColumn;
+		boolean haveColumnBlackOrBlank = true;
+		
+		for(int row = 0; row < cellsSet.length; row++) {
+			
+			haveBlackCellInColumn = false;
+			haveBlankCellInColumn = false;
+			
+			for(int column = 0; column < cellsSet.length; column++) {
+
+				if(cellsSet[column][row] == null) cellsSet[column][row] = createBlankCell();
+				
+				haveBlankCellInColumn |= cellsSet[column][row].isBlank() == true;
+				haveBlackCellInColumn |= cellsSet[column][row].isPainted() == true;
+				
+			}
+			
+			haveColumnBlackOrBlank &= haveBlackCellInColumn && haveBlankCellInColumn;
+			if(haveColumnBlackOrBlank == false) return false;
+			
+		}
+		
+		return haveColumnBlackOrBlank;
+	}
+	
+	private Cell createBlankCell() {
+
+		return new Cell(CellStates.BLANK);
+		
+	}
+	
+	/*////////////////////////////////////////////////////////////////////////////////
+
+	 	NO BORRAR ESTOS BLOQUES POR SI ACASO
 	
 	private boolean[][] createBaseAleatoryBooleanStructure(int size) {
 
 		 boolean[][] structure = new boolean[size][size];
-			
-		 int firstMiddle = size%2 == 0 ? size/2 : size/2+1;
-		 int secondMiddle = size - firstMiddle;
-
+		
 		 while(checkIfHaveBlankColumn(structure) == false) {
 			 
-			 for (int row = 0; row < firstMiddle; row++) {
-				 
-				 structure[row] = fillRowWithBooleans(size);
-				 //structure[]
-			 }
-			 
-			 for(int row = secondMiddle; row < size; row++)
+			 for (int row = 0; row < size; row++) 
 				 structure[row] = fillRowWithBooleans(size);
 
 		 }
@@ -67,6 +131,17 @@ public class CellsGrid {
 		 return structure;
 	}
 	
+	private void replaceBooleanStructureForStartedCells(boolean[][] grid) {
+		
+		cellsMap = new Cell[grid.length][grid.length];
+		
+		for (int i = 0; i < grid.length; i++) {
+		    for (int j = 0; j < grid.length; j++) {
+		        cellsMap[i][j] = grid[i][j] ? new Cell(CellStates.PAINTED) : new Cell(CellStates.BLANK);
+		    }
+		}
+	}
+
 	private boolean checkIfHaveBlankColumn(boolean[][] grid) {
 
 		boolean haveBlackCellInColumn;
@@ -93,7 +168,6 @@ public class CellsGrid {
 		
 	}
 	
-	
 	private boolean[] fillRowWithBooleans(int rowLength) {
 
 		int minimalSeparation = 1;
@@ -116,11 +190,20 @@ public class CellsGrid {
 	}
 	
 	private boolean[] setBooleansToTrue(boolean[] row, int startPaintedChain, int paintedChainLength) {
-		
+
 		for(int i = startPaintedChain; i < startPaintedChain + paintedChainLength; i++) {
+			
 			row[i] = true;
 		}
 		return row;
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////*/
+		
+	private int generateRandomNumberOfRow() {
+		
+		return generator.nextInt(cellsSet.length);
+		
 	}
 	
 	private int calculateTotalSpaceOccupiedForPaintedCellsChains(int firstPaintedChainLength, int secondPaintedChainLength, int minimalSeparation) {
@@ -146,25 +229,30 @@ public class CellsGrid {
 		
 	}
 	
-	private void replaceBooleanStructureForStartedCells(boolean[][] grid) {
+	public int[] getHintOfBlackCell() throws RuntimeException {
+
+		int randomRow = generateRandomNumberOfRow();
+		int[] coordenates = new int[2];
 		
-		cellsMap = new Cell[grid.length][grid.length];
-		
-		for (int i = 0; i < grid.length; i++) {
-		    for (int j = 0; j < grid.length; j++) {
-		        cellsMap[i][j] = grid[i][j] ? new Cell(CellStates.PAINTED) : new Cell(CellStates.BLANK);
-		    }
+		for(int column = 0; column < cellsSet.length; column++) {
+			if(cellsSet[randomRow][column].isPainted()) {
+				coordenates[0] = randomRow;
+				coordenates[1] = column;
+				return coordenates;
+			}
 		}
+
+		throw new RuntimeException("Error al buscar una pista: No hay ninguna celda negra en la CellGrid.");
 	}
 	
 	public String toString() {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		for(int i = 0; i < cellsMap.length; i++) {
-			for(int j = 0; j < cellsMap.length; j++) {
+		for(int i = 0; i < cellsSet.length; i++) {
+			for(int j = 0; j < cellsSet.length; j++) {
 				
-				sb.append(" + " + cellsMap[i][j].toString() + " + ");
+				sb.append(" + " + cellsSet[i][j].toString() + " + ");
 				
 			}
 			
@@ -172,5 +260,17 @@ public class CellsGrid {
 		}
 		
 		return sb.toString();
+	}
+	
+	public static CellsGrid createInBlankCopyOfCellsGrid(CellsGrid originalGrid) {
+
+		int gridLength = originalGrid.cellsSet.length;
+		Cell[][] cellsGrid = new Cell[gridLength][gridLength];
+		
+		for(int row = 0; row < gridLength; row++)
+			for(int column = 0; column < gridLength; column++)
+				cellsGrid[row][column] = new Cell(CellStates.BLANK);
+		
+		return new CellsGrid(cellsGrid);
 	}
 }
