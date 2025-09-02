@@ -48,17 +48,16 @@ public class CellsGrid {
 		fixColumnChains();
 	}
 	
-	///////
 	private void fixColumnChains() {
 	    int size = cellsSet.length;
 
-	    for (int col = 0; col < size; col++) {
+	    for (int column = 0; column < size; column++) {
 	        ArrayList<Integer> blackIndices = new ArrayList<>();
 	        for (int row = 0; row < size; row++) {
-	            if (cellsSet[row][col].isPainted()) blackIndices.add(row);
+	            if (cellsSet[row][column].isPainted()) blackIndices.add(row);
 	        }
 
-	        int blockCount = countBlocksInColumn(col);
+	        int blockCount = countBlocksInColumn(column);
 
 	        if (blockCount > 2) {
 	            // Reducir bloques: eliminar celdas negras intermedias
@@ -70,17 +69,17 @@ public class CellsGrid {
 
 	                // Si hay separación, podemos eliminar el bloque
 	                if (curr - prev > 1 && next - curr > 1) {
-	                	cellsSet[curr][col].establishCellHowBlank();
+	                	cellsSet[curr][column].establishCellHowBlank();
 	                    excess--;
 	                }
 	            }
 	        } else if (blockCount < 2) {
 	            // Agregar bloques: buscar espacio libre
 	            for (int row = 0; row < size && blockCount < 2; row++) {
-	                if (!cellsSet[row][col].isPainted() &&
-	                    (row == 0 || !cellsSet[row - 1][col].isPainted()) &&
-	                    (row == size - 1 || !cellsSet[row + 1][col].isPainted())) {
-	                	cellsSet[row][col].isPainted();
+	                if (!cellsSet[row][column].isPainted() &&
+	                    (row == 0 || !cellsSet[row - 1][column].isPainted()) &&
+	                    (row == size - 1 || !cellsSet[row + 1][column].isPainted())) {
+	                	cellsSet[row][column].isPainted();
 	                    blockCount++;
 	                }
 	            }
@@ -104,8 +103,6 @@ public class CellsGrid {
 	    return count;
 	}
 
-	
-	///////
 	private Cell[] fillRowWithBlackCells() {
 		
 		int minimalSeparation = 1;
@@ -304,6 +301,46 @@ public class CellsGrid {
 		}
 
 		throw new RuntimeException("Error al buscar una pista: No hay ninguna celda negra en la CellGrid.");
+	}
+	
+	public int[][] getLengthOfBlackChainsInRowsAndColumns() {
+
+		int numberOfBlackCellsInColumn = 0;
+		int numberOfBlackCellsInRow = 0;
+		int auxiliarRowPointer = 0;
+		int chainPosition = 0;
+		
+		int[][] blackChains = new int[cellsSet.length][2];
+		
+		for(int row = 0; row < cellsSet.length; row++) {
+
+			for(int column = 0; column < cellsSet.length; column++) {
+
+				if(cellsSet[row][column].isPainted()) {
+					
+					numberOfBlackCellsInRow = countNumberOfBlackCells(row, column);
+					
+					blackChains[row][chainPosition] = numberOfBlackCellsInRow;
+					chainPosition++;
+					column += numberOfBlackCellsInRow;
+				}
+			}
+		}
+		
+		return blackChains;
+	}
+	
+	private int countNumberOfBlackCells(int row, int startPositionOfBlackChain) {
+		
+		int count = 0;
+		for(int i = startPositionOfBlackChain; i < cellsSet.length; i++) {
+			
+			if(cellsSet[row][i].isPainted()) count++;
+				else return count;
+		}
+		
+		return count;
+		
 	}
 	
 	public String toString() {

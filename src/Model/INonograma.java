@@ -5,6 +5,10 @@ import Model.Nonograma.DifficultyLevels;
 public interface INonograma {
 
 	public void changeDifficultyLevel(DifficultyLevels difficulty);
+
+	public int[] getLengthOfBlackChainsInRows();
+	
+	public int[] getLengthOfBlackChainsInColumns();
 	
 	public int[] askCorrectHint();
 	

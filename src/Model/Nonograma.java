@@ -34,12 +34,13 @@ public class Nonograma implements INonograma {
 	@Override
 	public void changeDifficultyLevel(DifficultyLevels difficulty) {
 
+		currentDifficulty = difficulty;
+		createPlayboardAccordingToDifficulty();
 		
 	}
 
 	@Override
 	public int[] askCorrectHint() {
-		
 		return currentLevel.getPaintedCellCoordinate();
 	}
 
@@ -63,6 +64,18 @@ public class Nonograma implements INonograma {
 
 	@Override
 	public String notifyResult() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getLengthOfBlackChainsInRows() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[] getLengthOfBlackChainsInColumns() {
 		// TODO Auto-generated method stub
 		return null;
 	}
