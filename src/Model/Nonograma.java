@@ -57,7 +57,7 @@ public class Nonograma implements INonograma {
 
 	@Override
 	public void exitGame() {
-		// TODO Auto-generated method stub
+		System.exit(0);
 		
 	}
 
