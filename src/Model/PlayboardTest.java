@@ -1,7 +1,6 @@
-package Testing;
+package Model;
 
 import org.junit.Before;
-import Model.Playboard;
 
 public class PlayboardTest {
 

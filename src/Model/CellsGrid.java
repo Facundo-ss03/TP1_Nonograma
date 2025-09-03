@@ -10,12 +10,14 @@ public class CellsGrid {
 
 	private Cell[][] cellsSet;
 	private Random generator;
+	protected final int size;
 	
-	public CellsGrid(int size) {
+	public CellsGrid(int cellsSetSize) {
 		
-		if(size < 5)
-			throw new IllegalArgumentException("El tamaño del playboard no puede ser menor a 5. Cantidad Ingresada: " + size);
+		if(cellsSetSize < 5)
+			throw new IllegalArgumentException("El tamaño del playboard no puede ser menor a 5. Cantidad Ingresada: " + cellsSetSize);
 		
+		this.size = cellsSetSize;
 		generator = new Random();
 		initializeCellsGrid(size);
 		
@@ -24,9 +26,9 @@ public class CellsGrid {
 	private CellsGrid(Cell[][] voidCellsGrid) {
 		
 		this.cellsSet = voidCellsGrid;
-		
+		size = voidCellsGrid.length;
 	}
-		
+	
 	public void initializeCellsGrid(int size) {
 		
 		//boolean[][] baseStructure = createBaseAleatoryBooleanStructure(size);
@@ -304,16 +306,55 @@ public class CellsGrid {
 		throw new RuntimeException("Error al buscar una pista: No hay ninguna celda negra en la CellGrid.");
 	}
 	
-	public Tuple getLengthOfBlackChainsInRow(int row) {
+	public List<ITuple> getSetOfLengthsOfBlackChainsInRows() {
 
-		List<Integer> blackChains = BlackChainsDetector.detectBlackChainsByRow(cellsSet[row]);
-
-		Tuple result = new Tuple(blackChains.getFirst(), blackChains.getLast());
-		
-		return result;
+		return getLengthsOfBlackChainsInRows();
 		
 	}
 	
+	public List<ITuple> getSetOfLengthsOfBlackChainsInColumns(){
+		
+		return getLengthsOfBlackChainsInColumns();
+		
+	}
+	
+	private List<ITuple> getLengthsOfBlackChainsInColumns(){
+
+		List<ITuple> listLengthsTuple = new ArrayList<>();
+		int column = 0;
+		for(int row = 0; row < cellsSet.length; row++) {
+			
+			listLengthsTuple.add(createLengthsTuple(BlackChainsDetector.detectBlackChainsByColumns(cellsSet, column)));
+			column++;
+		}
+		
+		return listLengthsTuple;
+		
+	}
+	
+	private List<ITuple> getLengthsOfBlackChainsInRows(){
+
+		List<ITuple> listLengthsTuple = new ArrayList<>();
+		
+		for(int row = 0; row < cellsSet.length; row++) {
+			
+			listLengthsTuple.add(createLengthsTuple(BlackChainsDetector.detectBlackChainsByRows(cellsSet[row])));
+			
+		}
+		
+		return listLengthsTuple;
+		
+	}
+	
+	private Tuple createLengthsTuple(List<Integer> lengthsSet) {
+		
+		if(lengthsSet.size() == 2) 
+			return new Tuple(lengthsSet.get(0), lengthsSet.get(1));
+		else 
+			return new Tuple(lengthsSet.get(0), 0);
+		
+	}
+
 	public String toString() {
 		
 		StringBuilder sb = new StringBuilder();

@@ -1,6 +1,5 @@
-package Testing;
+package Model;
 
-import Model.Cell;
 import Model.Cell.CellStates;
 
 import static org.junit.Assert.assertTrue;

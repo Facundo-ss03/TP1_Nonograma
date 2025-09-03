@@ -1,17 +1,16 @@
 package Model;
 
+import java.util.List;
+
 public class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
 	private DifficultyLevels currentDifficulty;
-	public enum DifficultyLevels { EASY, NORMAL, HARD};
 	
 	public Nonograma(DifficultyLevels difficulty) {
 
-		this.currentDifficulty = difficulty;
-		
+		currentDifficulty = difficulty;
 		createPlayboardAccordingToDifficulty();
-		
 		
 	}
 	
@@ -40,8 +39,8 @@ public class Nonograma implements INonograma {
 	}
 
 	@Override
-	public int[] askCorrectHint() {
-		return currentLevel.getPaintedCellCoordinate();
+	public ITuple askCorrectHint() {
+		return null;
 	}
 
 	@Override
@@ -69,15 +68,39 @@ public class Nonograma implements INonograma {
 	}
 
 	@Override
-	public int[] getLengthOfBlackChainsInRows() {
-		// TODO Auto-generated method stub
-		return null;
+	public ITuple getLengthOfBlackChainsInOneRow(int row) throws IllegalArgumentException {
+
+		return currentLevel.getBlackChainsLengthsInRow(row);
+		
 	}
 
 	@Override
-	public int[] getLengthOfBlackChainsInColumns() {
-		// TODO Auto-generated method stub
-		return null;
+	public ITuple getLengthOfBlackChainsInOneColumn(int column) throws IllegalArgumentException {
+
+		return currentLevel.getBlackChainsLengthsInColumn(column);
+	
 	}
+
+	@Override
+	public List<ITuple> getLengthOfBlackChainsInAllRows() {
+		return currentLevel.getBlackChainsInAllRows();
+	}
+
+	@Override
+	public List<ITuple> getLengthOfBlackChainsInAllColumns() {
+		
+		return currentLevel.getBlackChainsInAllColumns();
+		
+	}
+
+	@Override
+	public int getPlayboardSize() {
+
+		return currentLevel.getSize();
+		
+	}
+	
+		
+
 }
 	

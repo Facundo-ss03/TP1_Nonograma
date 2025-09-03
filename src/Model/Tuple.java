@@ -1,6 +1,6 @@
 package Model;
 
-public class Tuple{
+class Tuple implements ITuple{
 
 	private int x;
 	private int y;
@@ -18,19 +18,6 @@ public class Tuple{
 		this.y = 0;
 		
 	}
-
-	public int getX() {
-		
-		return x;
-		
-	}
-	
-	
-	public int getY() {
-		
-		return y;
-		
-	}
 	
 	public void setFirstChain(int value) {
 
@@ -44,11 +31,15 @@ public class Tuple{
 	
 	public void setSecondChain(int value) {
 
-		if(value < 0) {
-			throw new IllegalArgumentException("La tupla no puede tener valores negativos.");
-		}
-		
-		y = value;
-		
+	}
+
+	@Override
+	public int getFirstChainLength() {
+		return x;
+	}
+
+	@Override
+	public int getSecondChainLength() {
+		return y;
 	}
 }

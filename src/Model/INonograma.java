@@ -1,16 +1,28 @@
 package Model;
 
-import Model.Nonograma.DifficultyLevels;
+import java.util.List;
 
 public interface INonograma {
 
+	public enum DifficultyLevels { EASY, NORMAL, HARD};
+	
+	public static INonograma createNonograma(DifficultyLevels difficulty) {
+		return new Nonograma(difficulty);
+	}
+	
 	public void changeDifficultyLevel(DifficultyLevels difficulty);
 
-	public int[] getLengthOfBlackChainsInRows();
+	public ITuple getLengthOfBlackChainsInOneRow(int row);
 	
-	public int[] getLengthOfBlackChainsInColumns();
+	public ITuple getLengthOfBlackChainsInOneColumn(int column);
+
+	public List<ITuple> getLengthOfBlackChainsInAllRows();
 	
-	public int[] askCorrectHint();
+	public List<ITuple> getLengthOfBlackChainsInAllColumns();
+	
+	public ITuple askCorrectHint();
+	
+	public int getPlayboardSize();
 	
 	public boolean askIfSolutionIsCorrect();
 	
