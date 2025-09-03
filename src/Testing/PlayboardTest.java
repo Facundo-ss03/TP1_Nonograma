@@ -1,12 +1,6 @@
 package Testing;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.RepeatedTest;
-
-import Model.Cell;
 import Model.Playboard;
 
 public class PlayboardTest {

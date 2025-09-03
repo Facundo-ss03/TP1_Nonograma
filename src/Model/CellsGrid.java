@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import Model.Cell.CellStates;
@@ -303,43 +304,13 @@ public class CellsGrid {
 		throw new RuntimeException("Error al buscar una pista: No hay ninguna celda negra en la CellGrid.");
 	}
 	
-	public int[][] getLengthOfBlackChainsInRowsAndColumns() {
+	public Tuple getLengthOfBlackChainsInRow(int row) {
 
-		int numberOfBlackCellsInColumn = 0;
-		int numberOfBlackCellsInRow = 0;
-		int auxiliarRowPointer = 0;
-		int chainPosition = 0;
-		
-		int[][] blackChains = new int[cellsSet.length][2];
-		
-		for(int row = 0; row < cellsSet.length; row++) {
+		List<Integer> blackChains = BlackChainsDetector.detectBlackChainsByRow(cellsSet[row]);
 
-			for(int column = 0; column < cellsSet.length; column++) {
-
-				if(cellsSet[row][column].isPainted()) {
-					
-					numberOfBlackCellsInRow = countNumberOfBlackCells(row, column);
-					
-					blackChains[row][chainPosition] = numberOfBlackCellsInRow;
-					chainPosition++;
-					column += numberOfBlackCellsInRow;
-				}
-			}
-		}
+		Tuple result = new Tuple(blackChains.getFirst(), blackChains.getLast());
 		
-		return blackChains;
-	}
-	
-	private int countNumberOfBlackCells(int row, int startPositionOfBlackChain) {
-		
-		int count = 0;
-		for(int i = startPositionOfBlackChain; i < cellsSet.length; i++) {
-			
-			if(cellsSet[row][i].isPainted()) count++;
-				else return count;
-		}
-		
-		return count;
+		return result;
 		
 	}
 	
