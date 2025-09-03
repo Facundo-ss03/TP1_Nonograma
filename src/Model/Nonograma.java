@@ -51,7 +51,8 @@ public class Nonograma implements INonograma {
 
 	@Override
 	public void restartGame() {
-		// TODO Auto-generated method stub
+		// with this, both player and solution board should be generated anew. So the model is ready to play. UI would need to update visuals and run the hints methods.
+		createPlayboardAccordingToDifficulty();
 		
 	}
 
