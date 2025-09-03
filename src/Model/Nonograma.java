@@ -63,8 +63,11 @@ public class Nonograma implements INonograma {
 
 	@Override
 	public String notifyResult() {
-		// TODO Auto-generated method stub
-		return null;
+		if(askIfSolutionIsCorrect){
+			return "WIN";
+		} else {
+		return "Answer Incomplete or Incorrect";
+		}
 	}
 }
 	
