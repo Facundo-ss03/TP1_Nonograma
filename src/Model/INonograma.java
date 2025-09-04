@@ -12,15 +12,15 @@ public interface INonograma {
 	
 	public void changeDifficultyLevel(DifficultyLevels difficulty);
 
-	public ITuple getLengthOfBlackChainsInOneRow(int row);
+	public String getLengthOfBlackChainsInOneRow(int row);
 	
-	public ITuple getLengthOfBlackChainsInOneColumn(int column);
+	public String getLengthOfBlackChainsInOneColumn(int column);
 
-	public List<ITuple> getLengthOfBlackChainsInAllRows();
+	public String getLengthOfBlackChainsInAllRows();
 	
-	public List<ITuple> getLengthOfBlackChainsInAllColumns();
+	public String getLengthOfBlackChainsInAllColumns();
 	
-	public ITuple askCorrectHint();
+	public void askCorrectHint();
 	
 	public int getPlayboardSize();
 	

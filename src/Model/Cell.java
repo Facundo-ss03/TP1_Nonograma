@@ -1,9 +1,9 @@
 package Model;
 
-public class Cell {
+class Cell {
 
 	private CellStates CurrentState;
-	public enum CellStates{ BLANK, FLAGGED, PAINTED }
+	enum CellStates{ BLANK, FLAGGED, PAINTED }
 	
 	public Cell(CellStates state) {
 		

@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackChainsDetector {
+class BlackChainsDetector {
 
 	public static List<Integer> detectBlackChainsByRows(Cell[] row) {
 		

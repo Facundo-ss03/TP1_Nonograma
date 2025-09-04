@@ -1,25 +1,26 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Playboard {
+class Playboard {
 
-	private CellsGrid solutionCellsGrid;
-	private CellsGrid cellsGridInBlank;
-	private List<ITuple> rowHints;
-	private List<ITuple> columnHints;
+	private CellsGrid solutionBoard;
+	private CellsGrid playerBoard;
+	private List<String> rowHints;
+	private List<String> columnHints;
 	
 	public Playboard(int size) {
 
-		solutionCellsGrid = new CellsGrid(size);
-		cellsGridInBlank = CellsGrid.createInBlankCopyOfCellsGrid(solutionCellsGrid);
+		solutionBoard = new CellsGrid(size);
+		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 
-		rowHints = solutionCellsGrid.getSetOfLengthsOfBlackChainsInRows();
-		columnHints = solutionCellsGrid.getSetOfLengthsOfBlackChainsInColumns();
+		rowHints = solutionBoard.getAllBlackChainsLengthsInRows();
+		columnHints = solutionBoard.getAllBlackChainsLengthsInColumns();
 		
 	}
 
-	public ITuple getBlackChainsLengthsInRow(int row){
+	public String getBlackChainsLengthsInRow(int row){
 
 		if(row < 0)
 			throw new IllegalArgumentException("La fila ingresada es negativa.");
@@ -30,7 +31,7 @@ public class Playboard {
 		
 	}
 	
-	public ITuple getBlackChainsLengthsInColumn(int column){
+	public String getBlackChainsLengthsInColumn(int column){
 
 		if(column < 0)
 			throw new IllegalArgumentException("La columna ingresada es negativa.");
@@ -41,19 +42,20 @@ public class Playboard {
 		
 	}
 	
-	public List<ITuple> getBlackChainsInAllRows(){
-		return rowHints;
+	public String getBlackChainsInAllRows(){
+
+		return rowHints.toString();
 	}	
 	
-	public List<ITuple> getBlackChainsInAllColumns(){
-		return columnHints;
+	public String getBlackChainsInAllColumns(){
+		return columnHints.toString();
 	}	
 	
 	public String toString() {
-		return solutionCellsGrid.toString();
+		return solutionBoard.toString();
 	}
 	
 	public int getSize() {
-		return solutionCellsGrid.size;
+		return solutionBoard.size;
 	}
 }

@@ -2,7 +2,7 @@ package Model;
 
 import java.util.List;
 
-public class Nonograma implements INonograma {
+class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
 	private DifficultyLevels currentDifficulty;
@@ -39,11 +39,6 @@ public class Nonograma implements INonograma {
 	}
 
 	@Override
-	public ITuple askCorrectHint() {
-		return null;
-	}
-
-	@Override
 	public boolean askIfSolutionIsCorrect() {
 		// TODO Auto-generated method stub
 		return false;
@@ -68,35 +63,43 @@ public class Nonograma implements INonograma {
 	}
 
 	@Override
-	public ITuple getLengthOfBlackChainsInOneRow(int row) throws IllegalArgumentException {
+	public int getPlayboardSize() {
+
+		return currentLevel.getSize();
+		
+	}
+
+	@Override
+	public String getLengthOfBlackChainsInOneRow(int row) {
 
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
 
 	@Override
-	public ITuple getLengthOfBlackChainsInOneColumn(int column) throws IllegalArgumentException {
+	public String getLengthOfBlackChainsInOneColumn(int column) {
 
 		return currentLevel.getBlackChainsLengthsInColumn(column);
-	
+		
 	}
 
 	@Override
-	public List<ITuple> getLengthOfBlackChainsInAllRows() {
+	public String getLengthOfBlackChainsInAllRows() {
+
 		return currentLevel.getBlackChainsInAllRows();
+		
 	}
 
 	@Override
-	public List<ITuple> getLengthOfBlackChainsInAllColumns() {
+	public String getLengthOfBlackChainsInAllColumns() {
 		
 		return currentLevel.getBlackChainsInAllColumns();
 		
 	}
 
 	@Override
-	public int getPlayboardSize() {
-
-		return currentLevel.getSize();
+	public void askCorrectHint() {
+		// TODO Auto-generated method stub
 		
 	}
 	
