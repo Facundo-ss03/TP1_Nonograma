@@ -29,6 +29,4 @@ public interface INonograma {
 	public void restartGame();
 	
 	public void exitGame();
-	
-	public String notifyResult();
 }

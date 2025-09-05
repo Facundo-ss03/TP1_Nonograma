@@ -57,12 +57,6 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public String notifyResult() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getPlayboardSize() {
 
 		return currentLevel.getSize();
