@@ -11,6 +11,8 @@ class CellsGrid {
 	private Cell[][] cellsSet;
 	private Random generator;
 	protected final int size;
+	private List<List<Integer>> rowHints;
+	private List<List<Integer>> columnHints;
 	
 	public CellsGrid(int cellsSetSize) {
 		
@@ -20,6 +22,9 @@ class CellsGrid {
 		this.size = cellsSetSize;
 		generator = new Random();
 		initializeCellsGrid(size);
+		
+		this.rowHints = createListOfBlackChainsLengthsInRows();
+		this.columnHints = createListOfBlackChainsLengthsInColumns();
 		
 	}
 	
@@ -54,19 +59,28 @@ class CellsGrid {
 		
 		Cell[] fillRow = new Cell[size];
 		int numberOfBlackCellsInRow = 0;
+		int numberOfBlankCellsInRow = 0;
 		int minimalSeparation = 1;		
+		boolean rowHasAtLeastOneBlackCell = false;
 		
-		for(int i = 0; i < size; i++) {
-
-			if(generator.nextDouble() < 0.4 && numberOfBlackCellsInRow < size - minimalSeparation) {
+		while(!rowHasAtLeastOneBlackCell) {
 				
-				fillRow[i] = new Cell(CellStates.PAINTED);
-				numberOfBlackCellsInRow++;
+			for(int i = 0; i < size; i++) {
+					
+				if(generator.nextDouble() < 0.4 && numberOfBlackCellsInRow < size - minimalSeparation) {
+						
+					fillRow[i] = new Cell(CellStates.PAINTED);
+					numberOfBlackCellsInRow++;
+						
+				} else {
+						
+					fillRow[i] = new Cell(CellStates.BLANK);
+					numberOfBlankCellsInRow++;
+				}
+			}
 			
-			} else fillRow[i] = new Cell(CellStates.BLANK);
-			
+			rowHasAtLeastOneBlackCell |= numberOfBlackCellsInRow > 0 && numberOfBlankCellsInRow > 0;
 		}
-		
 		
 		return fillRow;
 		
@@ -102,43 +116,35 @@ class CellsGrid {
 		return haveColumnBlackOrBlank;
 	}
 
-	public List<String> getAllBlackChainsLengthsInRows() {
+	public List<Integer> getBlackChainsLengthsInRow(int row) {
 		
-		return createListOfBlackChainsLengthsInRows();
+		return rowHints.get(row);
 		
 	}
 
-	public List<String> getAllBlackChainsLengthsInColumns() {
+	public List<Integer> getBlackChainsLengthsInColumn(int column) {
 		
-		return createListOfBlackChainsLengthsInColumns();
+		return columnHints.get(column);
 		
 	}
 	
-	private List<String> createListOfBlackChainsLengthsInRows(){
+	private List<List<Integer>> createListOfBlackChainsLengthsInRows(){
 
-		List<String> blackChainsLengths = new ArrayList<>();
-		StringBuilder sb = new StringBuilder();
+		List<List<Integer>> blackChainsLengths = new ArrayList<>();
 		
-		for(Cell[] row : cellsSet) {
-			
-			for(Integer integer : BlackChainsDetector.detectBlackChainsByRows(row))
-				sb.append(" " + integer + " ");
-			
-			blackChainsLengths.add(sb.toString() + "\n");
-			sb.setLength(0);
-			
-		}
+		for(Cell[] row : cellsSet)
+			blackChainsLengths.add(BlackChainsDetector.detectBlackChainsByRows(row));
 
 		return blackChainsLengths;
 	
 	}
 	
-	private List<String> createListOfBlackChainsLengthsInColumns() {
+	private List<List<Integer>> createListOfBlackChainsLengthsInColumns() {
 
-		List<String> blackChainsLengths = new ArrayList<>();
+		List<List<Integer>> blackChainsLengths = new ArrayList<>();
 		
 		for(int column = 0; column < size; column++)
-			blackChainsLengths.add(BlackChainsDetector.detectBlackChainsByColumns(cellsSet, column) + "\n");
+			blackChainsLengths.add(BlackChainsDetector.detectBlackChainsByColumns(cellsSet, column));
 
 		return blackChainsLengths;
 		

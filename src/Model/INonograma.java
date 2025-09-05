@@ -12,13 +12,13 @@ public interface INonograma {
 	
 	public void changeDifficultyLevel(DifficultyLevels difficulty);
 
-	public String getLengthOfBlackChainsInOneRow(int row);
+	public String  getHorizontalStringWithLengthOfBlackChainsInOneRow(int row);
 	
-	public String getLengthOfBlackChainsInOneColumn(int column);
+	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column);
 
-	public String getLengthOfBlackChainsInAllRows();
+	//public List<List<Integer>> getLengthOfBlackChainsInAllRows();
 	
-	public String getLengthOfBlackChainsInAllColumns();
+	//public List<List<Integer>> getLengthOfBlackChainsInAllColumns();
 	
 	public void askCorrectHint();
 	

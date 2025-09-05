@@ -1,10 +1,12 @@
 package Model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.RepeatedTest;
 
 public class CellsGridTest {
 	
@@ -57,6 +59,22 @@ public class CellsGridTest {
 		
 		int[] hint = new int[2];
 		assertEquals(hint.length, aleatoryCellsGrid.getHintOfBlackCell().length);
+		
+	}
+	
+	@RepeatedTest(10)
+	public void createCellsGridsForVerifyVelocityTest() {
+		
+		CellsGrid testCellsGrid = new CellsGrid(10);
+		System.out.print(testCellsGrid.toString());
+	}
+	
+	@RepeatedTest(10)
+	public void notVoidStringOfBlackChainsLengthsTest() {
+		
+		CellsGrid testCellsGrid = new CellsGrid(10);
+		
+		assertNotEquals(0, testCellsGrid.getBlackChainsLengthsInRow(0).size());
 		
 	}
 	

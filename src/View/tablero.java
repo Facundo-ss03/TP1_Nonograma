@@ -9,6 +9,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import Model.INonograma;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTextArea;
+
 public class tablero extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -63,7 +69,25 @@ public class tablero extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(138, 44, 176, 184);
+		contentPane.add(textArea);
+		
+
+		INonograma nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(174, 11, 89, 23);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
+		contentPane.add(btnNewButton);
+		
 
 	}
-
 }

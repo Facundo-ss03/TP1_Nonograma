@@ -1,55 +1,57 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class Playboard {
 
 	private CellsGrid solutionBoard;
 	private CellsGrid playerBoard;
-	private List<String> rowHints;
-	private List<String> columnHints;
 	
 	public Playboard(int size) {
 
 		solutionBoard = new CellsGrid(size);
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 
-		rowHints = solutionBoard.getAllBlackChainsLengthsInRows();
-		columnHints = solutionBoard.getAllBlackChainsLengthsInColumns();
-		
 	}
 
-	public String getBlackChainsLengthsInRow(int row){
+	public String getBlackChainsLengthsInRow(int row) throws IllegalArgumentException {
 
 		if(row < 0)
 			throw new IllegalArgumentException("La fila ingresada es negativa.");
-		if(row >= rowHints.size())
-			throw new IllegalArgumentException("La fila solicitada es mayor que el tamaño del tablero.");
 		
-		return rowHints.get(row);
+		return convertRowHintInHorizontalString(row);
 		
 	}
 	
-	public String getBlackChainsLengthsInColumn(int column){
+	private String convertRowHintInHorizontalString(int row) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for(Integer value : solutionBoard.getBlackChainsLengthsInRow(row))
+			sb.append(" " + value + " ");
+		
+		return sb.toString();
+		
+	}
+	
+	public String getBlackChainsLengthsInColumn(int column) throws IllegalArgumentException {
 
 		if(column < 0)
 			throw new IllegalArgumentException("La columna ingresada es negativa.");
-		if(column >= rowHints.size())
-			throw new IllegalArgumentException("La columna solicitada es mayor que el tamaño del tablero.");
 		
-		return columnHints.get(column);
+		return convertColumnHintInVerticalString(column);
 		
 	}
 	
-	public String getBlackChainsInAllRows(){
+	private String convertColumnHintInVerticalString(int column) {
 
-		return rowHints.toString();
-	}	
-	
-	public String getBlackChainsInAllColumns(){
-		return columnHints.toString();
-	}	
+		StringBuilder sb = new StringBuilder();
+		
+		for(Integer value : solutionBoard.getBlackChainsLengthsInColumn(column))
+			sb.append(" " + value + " " + "\n");
+		
+		return sb.toString();
+	}
 	
 	public String toString() {
 		return solutionBoard.toString();

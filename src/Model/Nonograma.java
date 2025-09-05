@@ -70,30 +70,16 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public String getLengthOfBlackChainsInOneRow(int row) {
+	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) {
 
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
 
 	@Override
-	public String getLengthOfBlackChainsInOneColumn(int column) {
+	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) {
 
 		return currentLevel.getBlackChainsLengthsInColumn(column);
-		
-	}
-
-	@Override
-	public String getLengthOfBlackChainsInAllRows() {
-
-		return currentLevel.getBlackChainsInAllRows();
-		
-	}
-
-	@Override
-	public String getLengthOfBlackChainsInAllColumns() {
-		
-		return currentLevel.getBlackChainsInAllColumns();
 		
 	}
 
