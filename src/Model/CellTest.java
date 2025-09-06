@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Cell.CellStates;
+import Model.ICell.CellStates;
 
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +38,7 @@ public class CellTest {
 		
 		Cell testCell = new Cell(CellStates.PAINTED);
 		
-		assertTrue(testCell.isPainted());
+		assertTrue(testCell.isBlack());
 		
 	}
 	
@@ -63,9 +63,9 @@ public class CellTest {
 	@Test
 	public void markCellWithBlackTest() {
 		
-		blankCell.establishCellHowPainted();
+		blankCell.establishCellHowBlack();
 		
-		assertTrue(blankCell.isPainted());
+		assertTrue(blankCell.isBlack());
 		
 	}
 	

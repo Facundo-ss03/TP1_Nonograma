@@ -11,6 +11,6 @@ public class PlayboardTest {
 	public void init() {
 		
 		this.testBoard = new Playboard(5);
-	
+		
 	}
 }

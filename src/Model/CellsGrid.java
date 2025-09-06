@@ -2,9 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-import Model.Cell.CellStates;
+import Model.ICell.CellStates;
 
 class CellsGrid {
 
@@ -14,17 +15,28 @@ class CellsGrid {
 	private List<List<Integer>> rowHints;
 	private List<List<Integer>> columnHints;
 	
-	public CellsGrid(int cellsSetSize) {
+	public CellsGrid(int size) {
 		
-		if(cellsSetSize < 5)
-			throw new IllegalArgumentException("El tamaño del playboard no puede ser menor a 5. Cantidad Ingresada: " + cellsSetSize);
+		if(size < 5)
+			throw new IllegalArgumentException("El tamaño del playboard no puede ser menor a 5. Cantidad Ingresada: " + size);
 		
-		this.size = cellsSetSize;
+		this.size = size;
 		generator = new Random();
-		initializeCellsGrid(size);
+		initializeCellsGrid();
 		
 		this.rowHints = createListOfBlackChainsLengthsInRows();
 		this.columnHints = createListOfBlackChainsLengthsInColumns();
+		
+	}
+	
+	public void paintCell(int row, int column) {
+
+		if(row < 0)
+			throw new IllegalArgumentException("La fila ingresada es negativa. Fila: " + row);
+		if(row < 0)
+			throw new IllegalArgumentException("La columna ingresada es negativa. Columna: " + column);
+		
+		cellsSet[row][column].establishCellHowBlack();
 		
 	}
 	
@@ -34,11 +46,8 @@ class CellsGrid {
 		size = voidCellsGrid.length;
 	}
 	
-	public void initializeCellsGrid(int size) {
+	public void initializeCellsGrid() {
 		
-		//boolean[][] baseStructure = createBaseAleatoryBooleanStructure(size);
-		//replaceBooleanStructureForStartedCells(baseStructure);
-
 		cellsSet = new Cell[size][size];
 		createAleatoryCellsStructure();
 		
@@ -49,13 +58,13 @@ class CellsGrid {
 		while(!haveBlankOrBlackColumn()) {
 
 			for (int row = 0; row < cellsSet.length; row++) {
-				cellsSet[row] = fillRowWithBlackCells();
+				cellsSet[row] = fillRowWithBlackCells(row);
 			}
 		}
 		
 	}
 
-	private Cell[] fillRowWithBlackCells() {
+	private Cell[] fillRowWithBlackCells(int row) {
 		
 		Cell[] fillRow = new Cell[size];
 		int numberOfBlackCellsInRow = 0;
@@ -65,16 +74,16 @@ class CellsGrid {
 		
 		while(!rowHasAtLeastOneBlackCell) {
 				
-			for(int i = 0; i < size; i++) {
+			for(int column = 0; column < size; column++) {
 					
 				if(generator.nextDouble() < 0.4 && numberOfBlackCellsInRow < size - minimalSeparation) {
 						
-					fillRow[i] = new Cell(CellStates.PAINTED);
+					fillRow[column] = new Cell(CellStates.PAINTED);
 					numberOfBlackCellsInRow++;
 						
 				} else {
 						
-					fillRow[i] = new Cell(CellStates.BLANK);
+					fillRow[column] = new Cell(CellStates.BLANK);
 					numberOfBlankCellsInRow++;
 				}
 			}
@@ -104,7 +113,7 @@ class CellsGrid {
 				if(cellsSet[column][row] == null) cellsSet[column][row] = new Cell(CellStates.BLANK);
 				
 				haveBlankCellInColumn |= cellsSet[column][row].isBlank() == true;
-				haveBlackCellInColumn |= cellsSet[column][row].isPainted() == true;
+				haveBlackCellInColumn |= cellsSet[column][row].isBlack() == true;
 				
 			}
 			
@@ -150,20 +159,19 @@ class CellsGrid {
 		
 	}
 	
-	private int generateRandomNumberOfRow() {
+	private int generateRandomRowNumber() {
 		return generator.nextInt(size);
 	}
 	
-	public int[] getHintOfBlackCell() throws RuntimeException {
+	public void setRandomCellOfPlayerBoardHowBlack(CellsGrid grid) {
 
-		int randomRow = generateRandomNumberOfRow();
-		int[] coordenates = new int[2];
+		int randomRow = generateRandomRowNumber();
 		
 		for(int column = 0; column < size; column++) {
-			if(cellsSet[randomRow][column].isPainted()) {
-				coordenates[0] = randomRow;
-				coordenates[1] = column;
-				return coordenates;
+			if(cellsSet[randomRow][column].isBlack()) {
+
+				grid.cellsSet[randomRow][column].establishCellHowBlack();
+				
 			}
 		}
 
@@ -180,7 +188,7 @@ class CellsGrid {
 
 				if(column.isBlank())
 					sb.append(" + " + "0" + " + ");
-				if(column.isPainted())
+				if(column.isBlack())
 					sb.append(" + " + "1" + " + ");
 			}
 			
@@ -189,6 +197,26 @@ class CellsGrid {
 
 		sb.append("\n");
 		return sb.toString();
+	}
+	
+	private boolean areEquals(CellsGrid otherGrid) {
+		
+		for(int row = 0; row < size; row++) {
+			
+			for(int column = 0; column < size; column++) {
+
+				Cell currentCellOfThisGrid = cellsSet[row][column];
+				Cell currentCellOfOtherGrid = cellsSet[row][column];
+				
+				if(currentCellOfThisGrid.equals(currentCellOfOtherGrid) == false)
+					return false;
+				
+			}
+			
+		}
+		
+		return true;
+		
 	}
 	
 	public static CellsGrid createInBlankCopyOfCellsGrid(CellsGrid originalGrid) {
@@ -201,5 +229,23 @@ class CellsGrid {
 				cellsGrid[row][column] = new Cell(CellStates.BLANK);
 		
 		return new CellsGrid(cellsGrid);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		
+		CellsGrid grid = (CellsGrid) obj;
+		
+		return areEquals(grid);
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(size, rowHints, columnHints);
+		
 	}
 }

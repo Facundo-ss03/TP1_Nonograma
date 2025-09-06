@@ -74,7 +74,6 @@ public class tablero extends JFrame {
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(138, 44, 176, 184);
 		contentPane.add(textArea);
-		
 
 		INonograma nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
 		
@@ -84,8 +83,12 @@ public class tablero extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
+				CellsObserver observable = new CellsObserver();
+				nonograma.markCellWithBlack(1, 2);
+				System.out.print(nonograma.toString());
 			}
 		});
+		
 		contentPane.add(btnNewButton);
 		
 

@@ -12,7 +12,7 @@ class BlackChainsDetector {
 	    int blackChainLength = 0;
 
 	    for (Cell cell : row) {
-	    	if (cell.isPainted()) {
+	    	if (cell.isBlack()) {
 	    		blackChainLength++;
 	    	} else {
 	        	if (blackChainIsInRange(blackChainLength, columns)) {
@@ -45,7 +45,7 @@ class BlackChainsDetector {
 
 	    for (int row = 0; row < grid.length; row++) {
 	    		
-	    	if(grid[row][column].isPainted()) {
+	    	if(grid[row][column].isBlack()) {
 	    		blackChainLength++;
 	    	} else {
 	    			

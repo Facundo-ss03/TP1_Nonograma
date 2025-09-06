@@ -1,10 +1,8 @@
 package Model;
 
-import java.util.List;
-
 public interface INonograma {
 
-	public enum DifficultyLevels { EASY, NORMAL, HARD};
+	public enum DifficultyLevels { EASY, NORMAL, HARD, VERY_HARD};
 	
 	public static INonograma createNonograma(DifficultyLevels difficulty) {
 		return new Nonograma(difficulty);
@@ -15,10 +13,8 @@ public interface INonograma {
 	public String  getHorizontalStringWithLengthOfBlackChainsInOneRow(int row);
 	
 	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column);
-
-	//public List<List<Integer>> getLengthOfBlackChainsInAllRows();
 	
-	//public List<List<Integer>> getLengthOfBlackChainsInAllColumns();
+	public void markCellWithBlack(int row, int column);
 	
 	public void askCorrectHint();
 	

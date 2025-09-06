@@ -1,15 +1,18 @@
 package Model;
 
-import java.util.List;
-
 class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
+	private int numberOfTracksAvaiables;
 	private DifficultyLevels currentDifficulty;
 	
 	public Nonograma(DifficultyLevels difficulty) {
 
-		currentDifficulty = difficulty;
+		if(difficulty == null)
+			throw new IllegalArgumentException("La dificultad ingresada es null. La dificultad inicial fue: " + difficulty);
+		
+		this.numberOfTracksAvaiables = 3;
+		this.currentDifficulty = difficulty;
 		createPlayboardAccordingToDifficulty();
 		
 	}
@@ -19,12 +22,15 @@ class Nonograma implements INonograma {
 		switch(currentDifficulty){
 
 		case EASY:
-			currentLevel = new Playboard(10);
+			currentLevel = new Playboard(5);
 			break;
 		case NORMAL:
-			currentLevel = new Playboard(15);
+			currentLevel = new Playboard(10);
 			break;
 		case HARD:
+			currentLevel = new Playboard(15);
+			break;
+		case VERY_HARD:
 			currentLevel = new Playboard(20);
 			break;
 		}
@@ -46,7 +52,8 @@ class Nonograma implements INonograma {
 
 	@Override
 	public void restartGame() {
-		// TODO Auto-generated method stub
+
+		createPlayboardAccordingToDifficulty();
 		
 	}
 
@@ -79,11 +86,30 @@ class Nonograma implements INonograma {
 
 	@Override
 	public void askCorrectHint() {
-		// TODO Auto-generated method stub
+
+		currentLevel.markBlackCellHint();
+		numberOfTracksAvaiables--;
+		
+	}
+
+	@Override
+	public void markCellWithBlack(int row, int column) {
+
+		currentLevel.markCellHowBlack(row, column);
 		
 	}
 	
+	@Override
+	public String toString() {
 		
-
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Estado actual del juego:\n\n");
+		sb.append(currentLevel.toString());
+		sb.append("\n\n");
+		sb.append("Número de pistas disponibles: " + numberOfTracksAvaiables);
+		
+		return sb.toString();
+	}
 }
 	

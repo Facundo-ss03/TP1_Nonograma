@@ -1,23 +1,39 @@
 package Model;
 
-class Cell {
+import java.util.ArrayList;
+import java.util.Objects;
 
-	private CellStates CurrentState;
-	enum CellStates{ BLANK, FLAGGED, PAINTED }
+class Cell implements ICell {
+
+	private CellStates currentState;
+	private final ArrayList<CellObserver> observers;
 	
 	public Cell(CellStates state) {
 		
-		startCellState(state);
+		
+		initializeCellState(state);
+		observers = new ArrayList<>();
+	}
+	
+	public void suscribeObserver(CellObserver observer) {
+		
+		observers.add(observer);
 		
 	}
 	
-	private void startCellState(CellStates state) {
+	public void deleteObserver(CellObserver observer) {
 		
-		initializeCell(state);
+		observers.remove(observer);
 		
 	}
 	
-	private void initializeCell(CellStates state) throws IllegalArgumentException {
+	private void notifyObservers() {
+		
+		for(CellObserver observer : observers)
+			observer.notify(this);
+	}
+		
+	private void initializeCellState(CellStates state) throws IllegalArgumentException {
 		
 		if(state == null)
 			throw new IllegalArgumentException("You cannot instantiate a Cell as null. The parameter 'state' was: " + state);
@@ -25,55 +41,85 @@ class Cell {
 		switch(state) {
 		
 		case BLANK:
-			establishCellHowBlank();
+			currentState = CellStates.BLANK;
 			break;
 		case FLAGGED:
-			establishCellHowFlagged();
+			currentState = CellStates.FLAGGED;
 			break;
 		case PAINTED:
-			establishCellHowPainted();
+			currentState = CellStates.PAINTED;
 			break;
 	
 		}
 	}
 	
+	@Override
+	public CellStates getCurrentState() {
+		return currentState;
+	}
+	
+	@Override
 	public void establishCellHowBlank() {
 
-		CurrentState = CellStates.BLANK;
+		currentState = CellStates.BLANK;
+		notifyObservers();
 		
 	}
 	
+	@Override
 	public void establishCellHowFlagged() {
 
-		CurrentState = CellStates.FLAGGED;
+		currentState = CellStates.FLAGGED;
+		notifyObservers();
 		
 	}
 	
-	public void establishCellHowPainted() {
+	@Override
+	public void establishCellHowBlack() {
 
-		CurrentState = CellStates.PAINTED;
+		currentState = CellStates.PAINTED;
+		notifyObservers();
 		
 	}
 	
 	public boolean isBlank() {
 
-		return CurrentState.equals(CellStates.BLANK);
+		return currentState.equals(CellStates.BLANK);
 		
 	}
 	
 	public boolean isFlagged() {
 		
-		return CurrentState.equals(CellStates.FLAGGED);
+		return currentState.equals(CellStates.FLAGGED);
 		
 	}
 	
-	public boolean isPainted() {
+	public boolean isBlack() {
 
-		return CurrentState.equals(CellStates.PAINTED);
+		return currentState.equals(CellStates.PAINTED);
 		
 	}
 	
+	@Override
 	public String toString() {
-		return CurrentState.toString();
+		return currentState.toString();
 	}
+	
+	public boolean equals(Object obj) {
+		
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		
+		Cell cell = (Cell)obj;
+		
+		return currentState == cell.currentState;
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(currentState);
+		
+	}
+	
 }

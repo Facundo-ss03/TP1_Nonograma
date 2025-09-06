@@ -1,17 +1,28 @@
 package Model;
 
-import java.util.List;
+import java.util.Objects;
 
 class Playboard {
 
-	private CellsGrid solutionBoard;
+	private final CellsGrid solutionBoard;
 	private CellsGrid playerBoard;
 	
 	public Playboard(int size) {
 
 		solutionBoard = new CellsGrid(size);
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
+	}
+	
+	public void markCellHowBlack(int row, int column) {
+		
+		playerBoard.paintCell(row, column);
+		
+	}
+	
+	public boolean comparePlayerboardWithSolution() {
 
+		return solutionBoard.equals(playerBoard);
+		
 	}
 
 	public String getBlackChainsLengthsInRow(int row) throws IllegalArgumentException {
@@ -53,11 +64,45 @@ class Playboard {
 		return sb.toString();
 	}
 	
-	public String toString() {
-		return solutionBoard.toString();
+	public void markBlackCellHint() {
+
+		solutionBoard.setRandomCellOfPlayerBoardHowBlack(playerBoard);
+		
 	}
-	
+
 	public int getSize() {
 		return solutionBoard.size;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		
+		Playboard playboard = (Playboard) obj;
+		
+		return solutionBoard.equals(playboard.solutionBoard) && playerBoard.equals(playboard.playerBoard);
+	}
+
+	@Override
+	public int hashCode() {
+		
+		return Objects.hash(solutionBoard, playerBoard);
+		
+	}
+	
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Tablero solución: \n\n");
+		sb.append(solutionBoard.toString());
+		sb.append("\n\n");
+		sb.append("Estado del tablero del jugador: \n\n");
+		sb.append(playerBoard.toString());
+		
+		return sb.toString();
 	}
 }
