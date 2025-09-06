@@ -64,14 +64,14 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) {
+	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) { //why ? Who hurt you XD, name it getRowHints(int row) 
 
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
 
 	@Override
-	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) {
+	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) { //why ? Who hurt you XD, name it getColumnHints(int column) 
 
 		return currentLevel.getBlackChainsLengthsInColumn(column);
 		
