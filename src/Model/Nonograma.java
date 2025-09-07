@@ -82,7 +82,12 @@ class Nonograma implements INonograma {
 		// TODO Auto-generated method stub
 		
 	}
-	
+	public boolean isSolution() {
+    	CellsGrid solutionBoard = currentLevel.getSolutionBoard();
+    	CellsGrid playBoard = currentLevel.getPlayerBoard();
+
+    	return currentLevel.verifyWin(solutionBoard, playBoard);
+	}
 		
 
 }
