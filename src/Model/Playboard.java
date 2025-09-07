@@ -60,4 +60,12 @@ class Playboard {
 	public int getSize() {
 		return solutionBoard.size;
 	}
+	
+	public CellsGrid getPlayerBoard(){
+		return playerBoard;
+	}
+	public CellsGrid getSolutionBoard(){
+		return solutionBoard;
+	}
+	
 }
