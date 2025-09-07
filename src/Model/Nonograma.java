@@ -40,19 +40,19 @@ class Nonograma implements INonograma {
 
 	@Override
 	public boolean askIfSolutionIsCorrect() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return currentLevel.verifyWin();
 	}
 
 	@Override
 	public void restartGame() {
-		// TODO Auto-generated method stub
+		createPlayboardAccordingToDifficulty();
 		
 	}
 
 	@Override
 	public void exitGame() {
-		// TODO Auto-generated method stub
+		System.exit(0);
 		
 	}
 
@@ -64,26 +64,24 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) {
+	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) { //why ? Who hurt you XD, name it getRowHints(int row) 
 
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
 
 	@Override
-	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) {
+	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) { //why ? Who hurt you XD, name it getColumnHints(int column) 
 
 		return currentLevel.getBlackChainsLengthsInColumn(column);
 		
 	}
 
 	@Override
-	public void askCorrectHint() {
-		// TODO Auto-generated method stub
+	public int[] askCorrectHint() {
 		
+		return currentLevel.getPaintedCellCoordinate();
 	}
 	
-		
-
 }
 	

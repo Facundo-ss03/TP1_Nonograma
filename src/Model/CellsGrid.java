@@ -202,4 +202,19 @@ class CellsGrid {
 		
 		return new CellsGrid(cellsGrid);
 	}
+	
+	public void refreshHints() {
+    	this.rowHints = createListOfBlackChainsLengthsInRows();
+    	this.columnHints = createListOfBlackChainsLengthsInColumns();
+	}
+	
+	public List<List<Integer>> getRowHints() {
+		return rowHints;
+	}
+
+	public List<List<Integer>> getColumnHints() {
+		return columnHints;
+	}
+
+
 }
