@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.List;
 import java.util.Objects;
 
 class Playboard {
@@ -25,16 +26,20 @@ class Playboard {
 		
 	}
 
-	public String getBlackChainsLengthsInRow(int row) throws IllegalArgumentException {
+	public List<Integer> getBlackChainsLengthsInRow(int row) throws IllegalArgumentException {
 
-		if(row < 0)
-			throw new IllegalArgumentException("La fila ingresada es negativa.");
-		
-		return convertRowHintInHorizontalString(row);
+		return solutionBoard.getBlackChainsLengthsInRow(row);
 		
 	}
 	
-	private String convertRowHintInHorizontalString(int row) {
+	public List<Integer> getBlackChainsLengthsInColumn(int column) throws IllegalArgumentException {
+
+		return solutionBoard.getBlackChainsLengthsInRow(column);
+		
+	}
+	
+	/*
+	private List<Integer> convertRowHintInHorizontalString(int row) {
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -42,15 +47,6 @@ class Playboard {
 			sb.append(" " + value + " ");
 		
 		return sb.toString();
-		
-	}
-	
-	public String getBlackChainsLengthsInColumn(int column) throws IllegalArgumentException {
-
-		if(column < 0)
-			throw new IllegalArgumentException("La columna ingresada es negativa.");
-		
-		return convertColumnHintInVerticalString(column);
 		
 	}
 	
@@ -63,6 +59,7 @@ class Playboard {
 		
 		return sb.toString();
 	}
+	*/
 	
 	public void markBlackCellHint() {
 

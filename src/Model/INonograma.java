@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 public interface INonograma {
 
 	public enum DifficultyLevels { EASY, NORMAL, HARD, VERY_HARD};
@@ -10,9 +12,9 @@ public interface INonograma {
 	
 	public void changeDifficultyLevel(DifficultyLevels difficulty);
 
-	public String  getHorizontalStringWithLengthOfBlackChainsInOneRow(int row);
+	public List<Integer>  getBlackChainsLengthsInRow(int row);
 	
-	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column);
+	public List<Integer>  getBlackChainsLengthsInColumn(int column);
 	
 	public void markCellWithBlack(int row, int column);
 	

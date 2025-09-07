@@ -13,7 +13,6 @@ public class CellsGridTest {
 	int size;
 	CellsGrid aleatoryCellsGrid;
 	CellsGrid inBlankCellsGrid;
-	int[] hintOfBlackCell;
 	
 	@Before
 	public void init() {
@@ -22,7 +21,7 @@ public class CellsGridTest {
 		aleatoryCellsGrid = new CellsGrid(size);
 		inBlankCellsGrid = CellsGrid.createInBlankCopyOfCellsGrid(aleatoryCellsGrid);
 		
-		aleatoryCellsGrid.setRandomCellOfPlayerBoardHowBlack(inBlankCellsGrid);;
+		aleatoryCellsGrid.setRandomCellOfPlayerBoardHowBlack(inBlankCellsGrid);
 		
 	}
 
@@ -47,19 +46,14 @@ public class CellsGridTest {
 		
 	}
 	
-	@Test(expected = RuntimeException.class)
-	public void getHintOfBlackCellOfInBlankCellsGridTest() {
-		
-		//inBlankCellsGrid.getHintOfBlackCell();
-		
-	}
 	
 	@Test
-	public void getHintOfBlackCellOfAleatoryCellsGridTest() {
-		
-		int[] hint = new int[2];
-		//assertEquals(hint.length, aleatoryCellsGrid.getHintOfBlackCell().length);
-		
+	public void revelateBlackCellOfAleatoryRowTest() {
+
+		CellsGrid grid = new CellsGrid(10);
+
+		grid.setRandomCellOfPlayerBoardHowBlack(inBlankCellsGrid);
+	
 	}
 	
 	@RepeatedTest(10)
@@ -77,14 +71,4 @@ public class CellsGridTest {
 		assertNotEquals(0, testCellsGrid.getBlackChainsLengthsInRow(0).size());
 		
 	}
-	
-	@Test
-	public void hintInRangeTest() {
-
-		boolean validHint = hintOfBlackCell[0] < size && hintOfBlackCell[0] >= 0;
-		
-		assertTrue(validHint);
-		
-	}
-	
 }

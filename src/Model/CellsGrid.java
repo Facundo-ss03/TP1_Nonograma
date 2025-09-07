@@ -46,7 +46,7 @@ class CellsGrid {
 		size = voidCellsGrid.length;
 	}
 	
-	public void initializeCellsGrid() {
+	private void initializeCellsGrid() {
 		
 		cellsSet = new Cell[size][size];
 		createAleatoryCellsStructure();
@@ -126,12 +126,22 @@ class CellsGrid {
 	}
 
 	public List<Integer> getBlackChainsLengthsInRow(int row) {
+
+		if(row < 0)
+			throw new IllegalArgumentException("La fila solicitada es negativa. El número de fila ingresado fue: " + row);
+		if(row >= cellsSet.length)
+			throw new IllegalArgumentException("La fila solicitada es mayor que el tamaño del tablero. El número de fila ingresado fue: " + row);
 		
 		return rowHints.get(row);
 		
 	}
 
 	public List<Integer> getBlackChainsLengthsInColumn(int column) {
+
+		if(column < 0)
+			throw new IllegalArgumentException("La columna solicitada es negativa. El número de columna ingresado fue: " + column);
+		if(column >= cellsSet.length)
+			throw new IllegalArgumentException("La columna solicitada es mayor que el tamaño del tablero. El número de columna ingresado fue: " + column);
 		
 		return columnHints.get(column);
 		
@@ -174,8 +184,24 @@ class CellsGrid {
 				
 			}
 		}
-
-		throw new RuntimeException("Error al buscar una pista: No hay ninguna celda negra en la CellGrid.");
+	}
+	
+	public void setCellHowBlack(int row, int column) {
+		
+		cellsSet[row][column].establishCellHowBlack();
+		
+	}
+	
+	public void setCellHowBlank(int row, int column) {
+		
+		cellsSet[row][column].establishCellHowBlank();
+		
+	}
+	
+	public void setCellHowFlagged(int row, int column) {
+		
+		cellsSet[row][column].establishCellHowFlagged();
+		
 	}
 	
 	public String toString() {

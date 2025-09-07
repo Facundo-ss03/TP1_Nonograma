@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
@@ -71,14 +73,14 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public String getHorizontalStringWithLengthOfBlackChainsInOneRow(int row) {
+	public List<Integer> getBlackChainsLengthsInRow(int row) {
 
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
 
 	@Override
-	public String  getVerticalStringWithLengthOfBlackChainsInOneColumn(int column) {
+	public List<Integer>  getBlackChainsLengthsInColumn(int column) {
 
 		return currentLevel.getBlackChainsLengthsInColumn(column);
 		
