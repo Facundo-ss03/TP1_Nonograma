@@ -106,7 +106,7 @@ class Nonograma implements INonograma {
 		
 		sb.append("Estado actual del juego:\n\n");
 		sb.append(currentLevel.toString());
-		sb.append("\n\n");
+		sb.append("\n");
 		sb.append("Número de pistas disponibles: " + numberOfTracksAvaiables);
 		
 		return sb.toString();
