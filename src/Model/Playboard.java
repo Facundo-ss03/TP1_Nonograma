@@ -13,6 +13,12 @@ class Playboard {
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 
 	}
+	public boolean verifyWin() {
+    	playBoard.refreshHints(); // actualizar estado dinámico
+
+    	return solutionBoard.getRowHints().equals(playBoard.getRowHints()) &&
+           	solutionBoard.getColumnHints().equals(playBoard.getColumnHints());
+}
 
 	public String getBlackChainsLengthsInRow(int row) throws IllegalArgumentException {
 
