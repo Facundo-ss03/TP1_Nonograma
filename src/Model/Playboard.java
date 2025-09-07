@@ -73,5 +73,12 @@ class Playboard {
 	public CellsGrid getSolutionBoard(){
 		return solutionBoard;
 	}
+	public int[] getPaintedCellCoordinate() {
+		
+		
+		
+		return new int[2];
+		
+	}
 	
 }
