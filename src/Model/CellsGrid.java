@@ -206,5 +206,9 @@ class CellsGrid {
     this.rowHints = createListOfBlackChainsLengthsInRows();
     this.columnHints = createListOfBlackChainsLengthsInColumns();
 }
+	public Cell[][] getCells(){
+	
+		return cellsSet;
+	}
 
 }
