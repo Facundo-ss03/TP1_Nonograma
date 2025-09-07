@@ -78,9 +78,9 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public void askCorrectHint() {
-		// TODO Auto-generated method stub
+	public int[] askCorrectHint() {
 		
+		return currentLevel.getPaintedCellCoordinate();
 	}
 	
 }
