@@ -202,13 +202,10 @@ class CellsGrid {
 		
 		return new CellsGrid(cellsGrid);
 	}
-	public void refreshHints() {
-    this.rowHints = createListOfBlackChainsLengthsInRows();
-    this.columnHints = createListOfBlackChainsLengthsInColumns();
-}
-	public Cell[][] getCells(){
 	
-		return cellsSet;
+	public void refreshHints() {
+    	this.rowHints = createListOfBlackChainsLengthsInRows();
+    	this.columnHints = createListOfBlackChainsLengthsInColumns();
 	}
 
 }
