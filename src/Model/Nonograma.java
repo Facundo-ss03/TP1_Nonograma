@@ -46,13 +46,13 @@ class Nonograma implements INonograma {
 
 	@Override
 	public void restartGame() {
-		// TODO Auto-generated method stub
+		createPlayboardAccordingToDifficulty();
 		
 	}
 
 	@Override
 	public void exitGame() {
-		// TODO Auto-generated method stub
+		System.exit(0);
 		
 	}
 
