@@ -40,8 +40,8 @@ class Nonograma implements INonograma {
 
 	@Override
 	public boolean askIfSolutionIsCorrect() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return currentLevel.verifyWin();
 	}
 
 	@Override
@@ -82,10 +82,6 @@ class Nonograma implements INonograma {
 		// TODO Auto-generated method stub
 		
 	}
-	public boolean isSolution() {
-    	return currentLevel.verifyWin();
-	}
-		
-
+	
 }
 	
