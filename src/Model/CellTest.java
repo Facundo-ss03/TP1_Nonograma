@@ -54,7 +54,7 @@ public class CellTest {
 	@Test
 	public void markCellWithFlagTest() {
 		
-		blankCell.establishCellHowFlagged();
+		blankCell.ToFlagged();
 
 		assertTrue(blankCell.isFlagged());
 		
@@ -63,7 +63,7 @@ public class CellTest {
 	@Test
 	public void markCellWithBlackTest() {
 		
-		blankCell.establishCellHowBlack();
+		blankCell.ToBlack();
 		
 		assertTrue(blankCell.isBlack());
 		
@@ -72,7 +72,7 @@ public class CellTest {
 	@Test
 	public void markCellWithBlankTest() {
 		
-		blankCell.establishCellHowBlank();
+		blankCell.ToBlank();
 
 		assertTrue(blankCell.isBlank());
 	}

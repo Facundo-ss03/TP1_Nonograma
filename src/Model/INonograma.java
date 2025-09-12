@@ -15,9 +15,15 @@ public interface INonograma {
 	public List<Integer>  getBlackChainsLengthsInRow(int row);
 	
 	public List<Integer>  getBlackChainsLengthsInColumn(int column);
-	
-	public void markCellWithBlack(int row, int column);
-	
+
+	public ICell getCellOfPlayerPlayboard(int row, int column);
+
+	public void setCellAsBlack(int row, int column); 
+
+	public void setCellAsBlank(int row, int column); 
+
+	public void setCellAsFlagged(int row, int column); 
+		
 	public void askCorrectHint();
 	
 	public int getPlayboardSize();

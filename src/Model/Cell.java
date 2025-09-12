@@ -1,37 +1,17 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 class Cell implements ICell {
 
 	private CellStates currentState;
-	private final ArrayList<CellObserver> observers;
 	
 	public Cell(CellStates state) {
 		
 		
 		initializeCellState(state);
-		observers = new ArrayList<>();
 	}
 	
-	public void suscribeObserver(CellObserver observer) {
-		
-		observers.add(observer);
-		
-	}
-	
-	public void deleteObserver(CellObserver observer) {
-		
-		observers.remove(observer);
-		
-	}
-	
-	private void notifyObservers() {
-		
-		for(CellObserver observer : observers)
-			observer.notify(this);
-	}
 		
 	private void initializeCellState(CellStates state) throws IllegalArgumentException {
 		
@@ -59,26 +39,23 @@ class Cell implements ICell {
 	}
 	
 	@Override
-	public void establishCellHowBlank() {
+	public void ToBlank() {
 
 		currentState = CellStates.BLANK;
-		notifyObservers();
 		
 	}
 	
 	@Override
-	public void establishCellHowFlagged() {
+	public void ToFlagged() {
 
 		currentState = CellStates.FLAGGED;
-		notifyObservers();
 		
 	}
 	
 	@Override
-	public void establishCellHowBlack() {
+	public void ToBlack() {
 
 		currentState = CellStates.PAINTED;
-		notifyObservers();
 		
 	}
 	

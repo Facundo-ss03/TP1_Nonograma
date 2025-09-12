@@ -4,11 +4,11 @@ public interface ICell {
 
 	public enum CellStates{ BLANK, FLAGGED, PAINTED }
 	
-	public void establishCellHowBlank();
+	public void ToBlank();
 	
-	public void establishCellHowFlagged();
+	public void ToFlagged();
 	
-	public void establishCellHowBlack();
+	public void ToBlack();
 	
 	public CellStates getCurrentState();
 }

@@ -29,6 +29,18 @@ class CellsGrid {
 		
 	}
 	
+	public Cell getCell(int row, int column) {
+		
+		return cellsSet[row][column];
+		
+	}
+	
+	public CellStates getCellState(int row, int column) {
+		
+		return cellsSet[row][column].getCurrentState();
+		
+	}
+	
 	public void paintCell(int row, int column) {
 
 		if(row < 0)
@@ -36,7 +48,29 @@ class CellsGrid {
 		if(row < 0)
 			throw new IllegalArgumentException("La columna ingresada es negativa. Columna: " + column);
 		
-		cellsSet[row][column].establishCellHowBlack();
+		cellsSet[row][column].ToBlack();
+		
+	}
+	
+	public void flagCell(int row, int column) {
+
+		if(row < 0)
+			throw new IllegalArgumentException("La fila ingresada es negativa. Fila: " + row);
+		if(row < 0)
+			throw new IllegalArgumentException("La columna ingresada es negativa. Columna: " + column);
+		
+		cellsSet[row][column].ToFlagged();
+		
+	}
+	
+	public void blankCell(int row, int column) {
+
+		if(row < 0)
+			throw new IllegalArgumentException("La fila ingresada es negativa. Fila: " + row);
+		if(row < 0)
+			throw new IllegalArgumentException("La columna ingresada es negativa. Columna: " + column);
+		
+		cellsSet[row][column].ToBlank();
 		
 	}
 	
@@ -180,7 +214,7 @@ class CellsGrid {
 		for(int column = 0; column < size; column++) {
 			if(cellsSet[randomRow][column].isBlack()) {
 
-				grid.cellsSet[randomRow][column].establishCellHowBlack();
+				grid.cellsSet[randomRow][column].ToBlack();
 				
 			}
 		}
@@ -188,19 +222,19 @@ class CellsGrid {
 	
 	public void setCellHowBlack(int row, int column) {
 		
-		cellsSet[row][column].establishCellHowBlack();
+		cellsSet[row][column].ToBlack();
 		
 	}
 	
 	public void setCellHowBlank(int row, int column) {
 		
-		cellsSet[row][column].establishCellHowBlank();
+		cellsSet[row][column].ToBlank();
 		
 	}
 	
 	public void setCellHowFlagged(int row, int column) {
 		
-		cellsSet[row][column].establishCellHowFlagged();
+		cellsSet[row][column].ToFlagged();
 		
 	}
 	

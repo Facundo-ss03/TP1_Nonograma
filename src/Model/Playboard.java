@@ -3,6 +3,8 @@ package Model;
 import java.util.List;
 import java.util.Objects;
 
+import Model.ICell.CellStates;
+
 class Playboard {
 
 	private final CellsGrid solutionBoard;
@@ -13,10 +15,31 @@ class Playboard {
 		solutionBoard = new CellsGrid(size);
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 	}
-	
-	public void markCellHowBlack(int row, int column) {
-		
+
+	public void changeCellStateToBlack(int row, int column) {
+
 		playerBoard.paintCell(row, column);
+		
+		System.out.print(playerBoard.toString());
+	}
+	
+	public void changeCellStateToBlank(int row, int column) {
+
+		playerBoard.blankCell(row, column);
+		
+		System.out.print(playerBoard.toString());
+	}
+	
+	public void changeCellStateToFlagged(int row, int column) {
+
+		playerBoard.flagCell(row, column);
+		
+		System.out.print(playerBoard.toString());
+	}
+	
+	public Cell getCellOfPlayerPlayboard(int row, int column) {
+		
+		return playerBoard.getCell(row, column);
 		
 	}
 	
@@ -37,29 +60,6 @@ class Playboard {
 		return solutionBoard.getBlackChainsLengthsInRow(column);
 		
 	}
-	
-	/*
-	private List<Integer> convertRowHintInHorizontalString(int row) {
-		
-		StringBuilder sb = new StringBuilder();
-		
-		for(Integer value : solutionBoard.getBlackChainsLengthsInRow(row))
-			sb.append(" " + value + " ");
-		
-		return sb.toString();
-		
-	}
-	
-	private String convertColumnHintInVerticalString(int column) {
-
-		StringBuilder sb = new StringBuilder();
-		
-		for(Integer value : solutionBoard.getBlackChainsLengthsInColumn(column))
-			sb.append(" " + value + " " + "\n");
-		
-		return sb.toString();
-	}
-	*/
 	
 	public void markBlackCellHint() {
 

@@ -93,11 +93,32 @@ class Nonograma implements INonograma {
 		numberOfTracksAvaiables--;
 		
 	}
+	
+	@Override
+	public void setCellAsBlack(int row, int column) {
+
+		currentLevel.changeCellStateToBlack(row, column);
+		
+	}
+	
+	@Override
+	public void setCellAsBlank(int row, int column) {
+
+		currentLevel.changeCellStateToBlank(row, column);
+		
+	}
+	
+	@Override
+	public void setCellAsFlagged(int row, int column) {
+
+		currentLevel.changeCellStateToFlagged(row, column);
+		
+	}
 
 	@Override
-	public void markCellWithBlack(int row, int column) {
-
-		currentLevel.markCellHowBlack(row, column);
+	public ICell getCellOfPlayerPlayboard(int row, int column) {
+		
+		return currentLevel.getCellOfPlayerPlayboard(row, column);
 		
 	}
 	
@@ -113,5 +134,6 @@ class Nonograma implements INonograma {
 		
 		return sb.toString();
 	}
+
 }
 	
