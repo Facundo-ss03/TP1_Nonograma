@@ -20,14 +20,14 @@ public class NonogramaTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void rowNegativeInSearchOfBlackChainsInRow() {
 		
-		nonograma.getHorizontalStringWithLengthOfBlackChainsInOneRow(-1);
+		nonograma.getBlackChainsLengthsInRow(-1);
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void rowGreatInSearchOfBlackChainsInRow() {
-		
-		nonograma.getVerticalStringWithLengthOfBlackChainsInOneColumn(10);
+
+		nonograma.getBlackChainsLengthsInColumn(10);
 		
 	}
 	
