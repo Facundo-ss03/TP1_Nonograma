@@ -24,7 +24,7 @@ public interface INonograma {
 
 	public void setCellAsFlagged(int row, int column); 
 		
-	public void askCorrectHint();
+	public int[] askCorrectHint();
 	
 	public int getPlayboardSize();
 	
