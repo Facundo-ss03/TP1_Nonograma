@@ -54,6 +54,7 @@ class Nonograma implements INonograma {
 
 	@Override
 	public void restartGame() {
+		
 		createPlayboardAccordingToDifficulty();
 		
 	}

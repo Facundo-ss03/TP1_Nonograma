@@ -16,31 +16,37 @@ class Playboard {
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 	}
 	public boolean verifyWin() {
-    	solutionBoard.refreshHints(); // actualizar estado dinámico
 
+        playerBoard.refreshHints();
+        
     	return solutionBoard.getRowHints().equals(solutionBoard.getRowHints()) &&
            	solutionBoard.getColumnHints().equals(playerBoard.getColumnHints());
+	
+    	//return playerBoard.equals(solutionBoard);
 	}
 
 	public void changeCellStateToBlack(int row, int column) {
 
 		playerBoard.paintCell(row, column);
-		
+
 		System.out.print(playerBoard.toString());
+		System.out.print(solutionBoard.toString());
 	}
 	
 	public void changeCellStateToBlank(int row, int column) {
 
 		playerBoard.blankCell(row, column);
-		
+
 		System.out.print(playerBoard.toString());
+		System.out.print(solutionBoard.toString());
 	}
 	
 	public void changeCellStateToFlagged(int row, int column) {
 
 		playerBoard.flagCell(row, column);
-		
+
 		System.out.print(playerBoard.toString());
+		System.out.print(solutionBoard.toString());
 	}
 	
 	public Cell getCellOfPlayerPlayboard(int row, int column) {

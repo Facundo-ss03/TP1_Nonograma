@@ -268,7 +268,7 @@ class CellsGrid {
 			for(int column = 0; column < size; column++) {
 
 				Cell currentCellOfThisGrid = cellsSet[row][column];
-				Cell currentCellOfOtherGrid = cellsSet[row][column];
+				Cell currentCellOfOtherGrid = otherGrid.cellsSet[row][column];
 				
 				if(currentCellOfThisGrid.equals(currentCellOfOtherGrid) == false)
 					return false;

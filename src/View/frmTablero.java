@@ -9,6 +9,7 @@ import javax.swing.JTextArea;
 
 import Model.ICell;
 import Model.INonograma;
+import Model.INonograma.DifficultyLevels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +20,7 @@ import java.awt.LayoutManager2;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.TextField;
@@ -31,6 +33,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicBorders;
 import javax.swing.plaf.basic.BasicSplitPaneUI.BasicVerticalLayoutManager;
+import java.awt.event.ActionListener;
+import javax.swing.JMenu;
 
 public class frmTablero {
 
@@ -104,8 +108,43 @@ public class frmTablero {
 		suscribeVerifyButton(btnVerifySolution);
 		
 		JButton btnRestart = new JButton("Restart");
+		btnRestart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				nonograma.restartGame();
+
+				rowHintsPanel.removeAll();
+				columnHintsPanel.removeAll();
+				interactivePanel.removeAll();
+				
+				loadRowHintsPanel(rowHintsPanel);
+				loadColumnHintsPanel(columnHintsPanel);
+				loadInteractivePanel(interactivePanel);
+
+				rowHintsPanel.revalidate();
+				rowHintsPanel.repaint();
+				columnHintsPanel.revalidate();
+				columnHintsPanel.repaint();
+				interactivePanel.revalidate();
+				interactivePanel.repaint();
+
+				
+			}
+		});
 		btnRestart.setBounds(10, 62, 80, 35);
 		frame.getContentPane().add(btnRestart);
+	}
+	
+	private void loadMenuBar(JMenuBar bar) {
+		
+		JMenu difficultiesMenu = new JMenu();
+		
+		for(DifficultyLevels difficulty : DifficultyLevels.values())
+		difficultiesMenu.add(new JCheckBoxMenuItem("" + difficulty + ""));
+		
+		
+		bar.add(difficultiesMenu);
+		
 	}
 	
 	private void suscribeVerifyButton(JButton verifyButton) {
