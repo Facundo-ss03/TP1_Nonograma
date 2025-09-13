@@ -323,4 +323,5 @@ class CellsGrid {
 	public List<List<Integer>> getColumnHints() {
 		return columnHints;
 	}
+	public int getSize() {return size;}
 }

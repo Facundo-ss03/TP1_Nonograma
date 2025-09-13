@@ -80,7 +80,7 @@ class Playboard {
 	}
 
 	public int getSize() {
-		return solutionBoard.size;
+		return solutionBoard.getSize();
 	}
 	
 	@Override
@@ -127,5 +127,22 @@ class Playboard {
 		
 		return new int[2];
 		
+	}
+	public int[] darPista() {
+	    int size = solutionBoard.getSize();
+	    
+	    for (int row = 0; row < size; row++) {
+	        for (int col = 0; col < size; col++) {
+	            Cell solCell = solutionBoard.getCell(row, col);
+	            Cell playerCell = playerBoard.getCell(row, col);
+	            
+	            if (solCell.getCurrentState() == Cell.CellStates.PAINTED &&
+	                playerCell.getCurrentState() == Cell.CellStates.BLANK) {
+	                return new int[]{row, col};
+	            }
+	        }
+	    }
+	    
+	    return null;
 	}
 }

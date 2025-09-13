@@ -47,9 +47,8 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public boolean askIfSolutionIsCorrect() {
-		
-		return currentLevel.verifyWin();
+	public int[] askCorrectHint() {
+    	return currentLevel.darPista(); 
 	}
 
 	@Override
