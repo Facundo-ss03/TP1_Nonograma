@@ -84,6 +84,12 @@ class Nonograma implements INonograma {
 		return currentLevel.getBlackChainsLengthsInColumn(column);
 		
 	}
+
+	@Override
+	public boolean askIfSolutionIsCorrect() {
+		
+		return currentLevel.verifyWin();
+	}
 	
 	@Override
 	public void setCellAsBlack(int row, int column) {
@@ -124,13 +130,6 @@ class Nonograma implements INonograma {
 		sb.append("Número de pistas disponibles: " + numberOfTracksAvaiables);
 		
 		return sb.toString();
-	}
-
-	@Override
-	public boolean askIfSolutionIsCorrect() {
-
-		return currentLevel.verifyWin();
-		
 	}
 }
 	
