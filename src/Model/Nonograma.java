@@ -86,11 +86,9 @@ class Nonograma implements INonograma {
 	}
 
 	@Override
-	public void askCorrectHint() {
-
-		currentLevel.markBlackCellHint();
-		numberOfTracksAvaiables--;
-	
+	public boolean askIfSolutionIsCorrect() {
+		
+		return currentLevel.verifyWin();
 	}
 	
 	@Override
