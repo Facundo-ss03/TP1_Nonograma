@@ -5,34 +5,24 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JRadioButtonMenuItem;
 
 import Model.ICell;
 import Model.INonograma;
 import Model.INonograma.DifficultyLevels;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.LayoutManager2;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import java.awt.TextField;
+import javax.swing.ButtonGroup;
+
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicBorders;
-import javax.swing.plaf.basic.BasicSplitPaneUI.BasicVerticalLayoutManager;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 
@@ -40,7 +30,10 @@ public class frmTablero {
 
 	private JFrame frame;
 	private INonograma nonograma;
-
+	private JPanel interactivePanel;
+	private JPanel rowHintsPanel;
+	private JPanel columnHintsPanel;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -77,20 +70,21 @@ public class frmTablero {
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		frame.getContentPane().setLayout(null);
+		loadMenuBar(menuBar);
 		
-		JPanel interactivePanel = new JPanel();
+		interactivePanel = new JPanel();
 		interactivePanel.setBounds(100, 108, 320, 280);
 		interactivePanel.setBackground(new Color(128, 128, 128));
 		frame.getContentPane().add(interactivePanel);
 		interactivePanel.setLayout(new GridLayout(5, 5, 0, 0));
 		
-		JPanel columnHintsPanel = new JPanel();
+		columnHintsPanel = new JPanel();
 		columnHintsPanel.setBackground(new Color(128, 128, 128));
 		columnHintsPanel.setBounds(100, 17, 320, 80);
 		frame.getContentPane().add(columnHintsPanel);
 		columnHintsPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JPanel rowHintsPanel = new JPanel();
+		rowHintsPanel = new JPanel();
 		rowHintsPanel.setBackground(new Color(128, 128, 128));
 		rowHintsPanel.setBounds(10, 108, 80, 280);
 		frame.getContentPane().add(rowHintsPanel);
@@ -113,35 +107,77 @@ public class frmTablero {
 				
 				nonograma.restartGame();
 
-				rowHintsPanel.removeAll();
-				columnHintsPanel.removeAll();
-				interactivePanel.removeAll();
-				
-				loadRowHintsPanel(rowHintsPanel);
-				loadColumnHintsPanel(columnHintsPanel);
-				loadInteractivePanel(interactivePanel);
+				emptyPanels();
 
-				rowHintsPanel.revalidate();
-				rowHintsPanel.repaint();
-				columnHintsPanel.revalidate();
-				columnHintsPanel.repaint();
-				interactivePanel.revalidate();
-				interactivePanel.repaint();
+				reloadPanels();
 
-				
+				refreshPanels();
+
 			}
 		});
 		btnRestart.setBounds(10, 62, 80, 35);
 		frame.getContentPane().add(btnRestart);
+		
+	}
+	
+	private void emptyPanels() {
+
+		interactivePanel.removeAll();
+		rowHintsPanel.removeAll();
+		columnHintsPanel.removeAll();
+		
+	}
+	
+	private void refreshPanels() {
+
+		interactivePanel.revalidate();
+		interactivePanel.repaint();
+		rowHintsPanel.revalidate();
+		rowHintsPanel.repaint();
+		columnHintsPanel.revalidate();
+		columnHintsPanel.repaint();
+	}
+	
+	private void reloadPanels() {
+
+		loadRowHintsPanel(rowHintsPanel);
+		loadColumnHintsPanel(columnHintsPanel);
+		loadInteractivePanel(interactivePanel);
+		
 	}
 	
 	private void loadMenuBar(JMenuBar bar) {
+
+		ButtonGroup difficultiesButtons = new ButtonGroup();
+		JMenu difficultiesMenu = new JMenu("Difficulty");
 		
-		JMenu difficultiesMenu = new JMenu();
+		for(DifficultyLevels difficulty : DifficultyLevels.values()) {
+			
+			JRadioButtonMenuItem radioButton = new JRadioButtonMenuItem("" + difficulty + "");
+			radioButton.addActionListener( e -> {
+				
+				nonograma.changeDifficultyLevel(difficulty);
+				emptyPanels();
+				refreshPanels();
+				reloadPanels();
+				frame.setSize(800, 800);
+			
+			});
+			
+			difficultiesButtons.add(radioButton);
+			
+		}
 		
-		for(DifficultyLevels difficulty : DifficultyLevels.values())
-		difficultiesMenu.add(new JCheckBoxMenuItem("" + difficulty + ""));
+		JRadioButtonMenuItem firstButton = (JRadioButtonMenuItem)difficultiesButtons.getElements().asIterator().next();
+		firstButton.setSelected(true);
 		
+		Iterator a = difficultiesButtons.getElements().asIterator();
+		
+		while(a.hasNext()) {
+			
+			difficultiesMenu.add((JRadioButtonMenuItem) a.next());
+			
+		}
 		
 		bar.add(difficultiesMenu);
 		

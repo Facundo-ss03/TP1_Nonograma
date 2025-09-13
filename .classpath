@@ -8,5 +8,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="C:/Users/facun/Downloads/Compressed/eclipse-java-2025-09-R-win32-x86_64/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.131.0.v20250820-1556.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.common_1.8.1.v20240327-0800.jar"/>
+	<classpathentry kind="lib" path="com.jgoodies.forms_1.9.0.v20240327-0800.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
