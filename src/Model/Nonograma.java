@@ -48,20 +48,19 @@ class Nonograma implements INonograma {
 
 	@Override
 	public boolean askIfSolutionIsCorrect() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return currentLevel.verifyWin();
 	}
 
 	@Override
 	public void restartGame() {
-
 		createPlayboardAccordingToDifficulty();
 		
 	}
 
 	@Override
 	public void exitGame() {
-		// TODO Auto-generated method stub
+		System.exit(0);
 		
 	}
 
@@ -74,7 +73,7 @@ class Nonograma implements INonograma {
 
 	@Override
 	public List<Integer> getBlackChainsLengthsInRow(int row) {
-
+		
 		return currentLevel.getBlackChainsLengthsInRow(row);
 		
 	}
@@ -91,7 +90,7 @@ class Nonograma implements INonograma {
 
 		currentLevel.markBlackCellHint();
 		numberOfTracksAvaiables--;
-		
+	
 	}
 	
 	@Override
@@ -134,6 +133,5 @@ class Nonograma implements INonograma {
 		
 		return sb.toString();
 	}
-
 }
 	

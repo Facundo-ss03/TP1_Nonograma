@@ -15,6 +15,12 @@ class Playboard {
 		solutionBoard = new CellsGrid(size);
 		playerBoard = CellsGrid.createInBlankCopyOfCellsGrid(solutionBoard);
 	}
+	public boolean verifyWin() {
+    	solutionBoard.refreshHints(); // actualizar estado dinámico
+
+    	return solutionBoard.getRowHints().equals(solutionBoard.getRowHints()) &&
+           	solutionBoard.getColumnHints().equals(playerBoard.getColumnHints());
+	}
 
 	public void changeCellStateToBlack(int row, int column) {
 
@@ -101,5 +107,19 @@ class Playboard {
 		sb.append(playerBoard.toString());
 		
 		return sb.toString();
+	}
+	
+	public CellsGrid getPlayerBoard(){
+		return playerBoard;
+	}
+	public CellsGrid getSolutionBoard(){
+		return solutionBoard;
+	}
+	public int[] getPaintedCellCoordinate() {
+		
+		
+		
+		return new int[2];
+		
 	}
 }

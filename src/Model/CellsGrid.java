@@ -308,4 +308,17 @@ class CellsGrid {
 		return Objects.hash(size, rowHints, columnHints);
 		
 	}
+	
+	public void refreshHints() {
+    	this.rowHints = createListOfBlackChainsLengthsInRows();
+    	this.columnHints = createListOfBlackChainsLengthsInColumns();
+	}
+	
+	public List<List<Integer>> getRowHints() {
+		return rowHints;
+	}
+
+	public List<List<Integer>> getColumnHints() {
+		return columnHints;
+	}
 }
