@@ -36,7 +36,7 @@ public class frmTablero {
 	private JPanel interactivePanel;
 	private JPanel rowHintsPanel;
 	private JPanel columnHintsPanel;
-	
+	private JButton[][] interactivePanelButtons;
 	/**
 	 * Launch the application.
 	 */
@@ -98,6 +98,26 @@ public class frmTablero {
 		mnNewMenu.add(rdbtnMetal);
 		mnNewMenu.add(rdbtnNimbus);
 		mnNewMenu.add(rdbtnMotif);
+		
+
+		JButton pistaButton = new JButton("Pedir Pista");
+			menuBar.add(pistaButton);
+			pistaButton.addActionListener(e -> {
+			    int[] pista = nonograma.askCorrectHint();
+			    if (pista != null) {
+			        int row = pista[0];
+			        int col = pista[1];
+	
+			        
+			        nonograma.setCellAsBlack(row, col); 
+	
+			        
+			        JButton button = interactivePanelButtons[row][col]; 
+			        button.setBackground(Color.BLACK);
+			    } else {
+			        JOptionPane.showMessageDialog(frame, "No hay más pistas disponibles", "Pista", JOptionPane.INFORMATION_MESSAGE);
+			    }
+			});
 		
 		
 		rdbtnMetal.addActionListener(e -> {
@@ -272,7 +292,7 @@ public class frmTablero {
 	private void loadInteractivePanel(JPanel panel) {
 		
 		int playboardSize = nonograma.getPlayboardSize();
-		
+		interactivePanelButtons = new JButton[playboardSize][playboardSize];
 		for(int i = 0; i < playboardSize; i++) {
 			for(int j = 0; j < playboardSize; j++) {
 
@@ -289,6 +309,7 @@ public class frmTablero {
 				});
 				
 				panel.add(cell);
+				interactivePanelButtons[i][j] = cell;
 			}	
 		}
 	}
