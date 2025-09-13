@@ -80,7 +80,7 @@ class Playboard {
 	}
 
 	public int getSize() {
-		return solutionBoard.size;
+		return solutionBoard.getSize();
 	}
 	
 	@Override
