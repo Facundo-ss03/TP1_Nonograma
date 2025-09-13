@@ -78,6 +78,67 @@ public class frmTablero {
 		frame.setJMenuBar(menuBar);
 		frame.getContentPane().setLayout(null);
 		loadMenuBar(menuBar);
+
+		//skins menu start
+		JMenu mnNewMenu = new JMenu("Skin");
+		menuBar.add(mnNewMenu);
+
+		
+		JRadioButtonMenuItem rdbtnMetal = new JRadioButtonMenuItem("Metal");
+		JRadioButtonMenuItem rdbtnNimbus = new JRadioButtonMenuItem("Nimbus");
+		JRadioButtonMenuItem rdbtnMotif = new JRadioButtonMenuItem("Motif");
+
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnMetal);
+		group.add(rdbtnNimbus);
+		group.add(rdbtnMotif);
+
+		
+		mnNewMenu.add(rdbtnMetal);
+		mnNewMenu.add(rdbtnNimbus);
+		mnNewMenu.add(rdbtnMotif);
+		
+		
+		rdbtnMetal.addActionListener(e -> {
+		    try {
+		        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		        SwingUtilities.updateComponentTreeUI(frame);
+		        
+		        interactivePanel.invalidate();
+		        interactivePanel.validate();
+		       
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		});
+
+		rdbtnNimbus.addActionListener(e -> {
+		    try {
+		        UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+		        SwingUtilities.updateComponentTreeUI(frame);
+		        
+		        interactivePanel.invalidate();
+		        interactivePanel.validate();
+		        
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		});
+
+		rdbtnMotif.addActionListener(e -> {
+		    try {
+		    	UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		        SwingUtilities.updateComponentTreeUI(frame);
+		        
+		        interactivePanel.invalidate();
+		        interactivePanel.validate();
+		        
+		    } catch (Exception ex) {
+		        ex.printStackTrace();
+		    }
+		});
+//skins menu end
 		
 		interactivePanel = new JPanel();
 		interactivePanel.setBounds(100, 108, 594, 460);
@@ -201,16 +262,11 @@ public class frmTablero {
 	}
 	
 	private void verifySolution() {
-		
-		if(nonograma.askIfSolutionIsCorrect()) {
-			
-			System.out.print("Ganaste");
-			
-		} else {
-			
-			System.out.print("Perdiste");
-		}
-		
+	    if (nonograma.askIfSolutionIsCorrect()) {
+	        JOptionPane.showMessageDialog(frame, "¡Ganaste!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+	    } else {
+	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto!", "Resultado", JOptionPane.WARNING_MESSAGE);
+	    }
 	}
 	
 	private void loadInteractivePanel(JPanel panel) {
