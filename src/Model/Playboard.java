@@ -63,7 +63,7 @@ class Playboard {
 	
 	public List<Integer> getBlackChainsLengthsInColumn(int column) throws IllegalArgumentException {
 
-		return solutionBoard.getBlackChainsLengthsInRow(column);
+		return solutionBoard.getBlackChainsLengthsInColumn(column);
 		
 	}
 	

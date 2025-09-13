@@ -250,6 +250,8 @@ class CellsGrid {
 					sb.append(" + " + "0" + " + ");
 				if(column.isBlack())
 					sb.append(" + " + "1" + " + ");
+				if(column.isFlagged())
+					sb.append(" + " + "F" + " + ");
 			}
 			
 			sb.append("\n");

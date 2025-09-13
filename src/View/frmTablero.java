@@ -202,11 +202,11 @@ public class frmTablero {
 		
 	}
 	
-	private String printBlackCellsListInVertical(int row) {
+	private String printBlackCellsListInVertical(int column) {
 		
 		StringBuilder sb = new StringBuilder();
 
-		for(Integer hint : nonograma.getBlackChainsLengthsInRow(row)) {
+		for(Integer hint : nonograma.getBlackChainsLengthsInColumn(column)) {
 			
 			sb.append(hint + "\n");
 			
