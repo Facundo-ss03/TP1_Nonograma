@@ -97,9 +97,39 @@ public class frmTablero {
 		loadRowHintsPanel(rowHintsPanel);
 		loadColumnHintsPanel(columnHintsPanel);	
 		loadInteractivePanel(interactivePanel);
+		
+		JButton btnVerifySolution = new JButton("Verify");
+		btnVerifySolution.setBounds(10, 17, 80, 35);
+		frame.getContentPane().add(btnVerifySolution);
+		suscribeVerifyButton(btnVerifySolution);
+		
+		JButton btnRestart = new JButton("Restart");
+		btnRestart.setBounds(10, 62, 80, 35);
+		frame.getContentPane().add(btnRestart);
 	}
 	
-
+	private void suscribeVerifyButton(JButton verifyButton) {
+		
+		verifyButton.addActionListener( e -> {
+			
+			verifySolution();
+			
+		});
+		
+	}
+	
+	private void verifySolution() {
+		
+		if(nonograma.askIfSolutionIsCorrect()) {
+			
+			System.out.print("Ganaste");
+			
+		} else {
+			
+			System.out.print("Perdiste");
+		}
+		
+	}
 	
 	private void loadInteractivePanel(JPanel panel) {
 		
@@ -116,7 +146,6 @@ public class frmTablero {
 				
 				cell.addActionListener( e -> {
 					
-					System.out.print("Hubo un click en la celda de la fila: " + row + " columna: " + column + "\n");
 					updateButtonColor(cell, row, column);
 					
 				});
