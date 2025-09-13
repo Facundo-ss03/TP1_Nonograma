@@ -11,8 +11,10 @@ import Model.ICell;
 import Model.INonograma;
 import Model.INonograma.DifficultyLevels;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
 
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
@@ -25,6 +27,7 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
+import java.awt.GridBagLayout;
 
 public class frmTablero {
 
@@ -54,7 +57,9 @@ public class frmTablero {
 	 * Create the application.
 	 */
 	public frmTablero() {
+		
 		initialize();
+	
 	}
 
 	/**
@@ -64,8 +69,10 @@ public class frmTablero {
 		
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 460, 460);
+		frame.setBounds(100, 100, 720, 640);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -73,24 +80,23 @@ public class frmTablero {
 		loadMenuBar(menuBar);
 		
 		interactivePanel = new JPanel();
-		interactivePanel.setBounds(100, 108, 320, 280);
-		interactivePanel.setBackground(new Color(128, 128, 128));
+		interactivePanel.setBounds(100, 108, 594, 460);
+		interactivePanel.setBackground(new Color(240, 240, 240));
 		frame.getContentPane().add(interactivePanel);
-		interactivePanel.setLayout(new GridLayout(5, 5, 0, 0));
+		interactivePanel.setLayout(new GridLayout(nonograma.getPlayboardSize(), nonograma.getPlayboardSize(), 0, 0)); 
 		
 		columnHintsPanel = new JPanel();
-		columnHintsPanel.setBackground(new Color(128, 128, 128));
-		columnHintsPanel.setBounds(100, 17, 320, 80);
+		columnHintsPanel.setBackground(new Color(240, 240, 240));
+		columnHintsPanel.setBounds(100, 17, 594, 80);
 		frame.getContentPane().add(columnHintsPanel);
 		columnHintsPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		rowHintsPanel = new JPanel();
-		rowHintsPanel.setBackground(new Color(128, 128, 128));
-		rowHintsPanel.setBounds(10, 108, 80, 280);
+		rowHintsPanel.setBackground(new Color(240, 240, 240));
+		rowHintsPanel.setBounds(10, 108, 80, 460);
 		frame.getContentPane().add(rowHintsPanel);
 		rowHintsPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
 		
 		loadRowHintsPanel(rowHintsPanel);
 		loadColumnHintsPanel(columnHintsPanel);	
@@ -112,7 +118,7 @@ public class frmTablero {
 				reloadPanels();
 
 				refreshPanels();
-
+				
 			}
 		});
 		btnRestart.setBounds(10, 62, 80, 35);
@@ -139,6 +145,8 @@ public class frmTablero {
 	}
 	
 	private void reloadPanels() {
+		
+		interactivePanel.setLayout(new GridLayout(nonograma.getPlayboardSize(), nonograma.getPlayboardSize(), 0, 0));
 
 		loadRowHintsPanel(rowHintsPanel);
 		loadColumnHintsPanel(columnHintsPanel);
@@ -160,8 +168,7 @@ public class frmTablero {
 				emptyPanels();
 				refreshPanels();
 				reloadPanels();
-				frame.setSize(800, 800);
-			
+
 			});
 			
 			difficultiesButtons.add(radioButton);
@@ -226,7 +233,6 @@ public class frmTablero {
 				});
 				
 				panel.add(cell);
-				
 			}	
 		}
 	}
