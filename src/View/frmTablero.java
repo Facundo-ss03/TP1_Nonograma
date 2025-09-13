@@ -41,6 +41,7 @@ public class frmTablero {
 	private JPanel rowHintsPanel;
 	private JPanel columnHintsPanel;
 	private JButton[][] interactivePanelButtons;
+	private ButtonsManager buttonsManager;
 	/**
 	 * Launch the application.
 	 */
@@ -77,6 +78,7 @@ public class frmTablero {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
+		buttonsManager = new ButtonsManager(nonograma);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -162,13 +164,11 @@ public class frmTablero {
 		        ex.printStackTrace();
 		    }
 		});
-//skins menu end
 		
 		interactivePanel = new JPanel();
 		interactivePanel.setBounds(100, 108, 594, 460);
 		interactivePanel.setBackground(new Color(240, 240, 240));
 		frame.getContentPane().add(interactivePanel);
-		interactivePanel.setLayout(new GridLayout(nonograma.getPlayboardSize(), nonograma.getPlayboardSize(), 0, 0)); 
 		
 		columnHintsPanel = new JPanel();
 		columnHintsPanel.setBackground(new Color(240, 240, 240));
@@ -181,11 +181,8 @@ public class frmTablero {
 		rowHintsPanel.setBounds(10, 108, 80, 460);
 		frame.getContentPane().add(rowHintsPanel);
 		rowHintsPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		
-		loadRowHintsPanel(rowHintsPanel);
-		loadColumnHintsPanel(columnHintsPanel);	
-		loadInteractivePanel(interactivePanel);
+
+		restartPanels();
 		
 		JButton btnVerifySolution = new JButton("Verify");
 		btnVerifySolution.setBounds(10, 17, 80, 35);
@@ -198,16 +195,20 @@ public class frmTablero {
 				
 				nonograma.restartGame();
 
-				emptyPanels();
+				restartPanels();
 
-				reloadPanels();
-
-				refreshPanels();
-				
 			}
 		});
 		btnRestart.setBounds(10, 62, 80, 35);
 		frame.getContentPane().add(btnRestart);
+		
+	}
+
+	private void restartPanels() {
+		
+		emptyPanels();
+		refreshPanels();
+		loadPanels();
 		
 	}
 	
@@ -229,7 +230,7 @@ public class frmTablero {
 		columnHintsPanel.repaint();
 	}
 	
-	private void reloadPanels() {
+	private void loadPanels() {
 		
 		interactivePanel.setLayout(new GridLayout(nonograma.getPlayboardSize(), nonograma.getPlayboardSize(), 0, 0));
 
@@ -252,7 +253,7 @@ public class frmTablero {
 				nonograma.changeDifficultyLevel(difficulty);
 				emptyPanels();
 				refreshPanels();
-				reloadPanels();
+				loadPanels();
 
 			});
 			
@@ -263,11 +264,11 @@ public class frmTablero {
 		JRadioButtonMenuItem firstButton = (JRadioButtonMenuItem)difficultiesButtons.getElements().asIterator().next();
 		firstButton.setSelected(true);
 		
-		Iterator a = difficultiesButtons.getElements().asIterator();
+		Iterator radioButtons = difficultiesButtons.getElements().asIterator();
 		
-		while(a.hasNext()) {
+		while(radioButtons.hasNext()) {
 			
-			difficultiesMenu.add((JRadioButtonMenuItem) a.next());
+			difficultiesMenu.add((JRadioButtonMenuItem) radioButtons.next());
 			
 		}
 		
@@ -297,27 +298,31 @@ public class frmTablero {
 		
 		int playboardSize = nonograma.getPlayboardSize();
 		interactivePanelButtons = new JButton[playboardSize][playboardSize];
-		for(int i = 0; i < playboardSize; i++) {
-			for(int j = 0; j < playboardSize; j++) {
+		
+		for(int rowButtons = 0; rowButtons < playboardSize; rowButtons++) {
+			for(int columnButton = 0; columnButton < playboardSize; columnButton++) {
 
+				/*
 				JButton cell = new JButton();
-				cell.setBackground(Color.WHITE);
+				cell.setBackground(Color.WHITE);  
 
-				int row = i;
-				int column = j;
+				int row = rowButtons;
+				int column = columnButton;
 				
 				cell.addActionListener( e -> {
 					
-					updateButtonColor(cell, row, column);
+					buttonsManager.updateButtonColor(cell, row, column);
 					
 				});
+				*/
+				JButton cell = buttonsManager.createCellButton(rowButtons, columnButton);
 				
 				panel.add(cell);
-				interactivePanelButtons[i][j] = cell;
+				interactivePanelButtons[rowButtons][columnButton] = cell;
 			}	
 		}
 	}
-
+/*
 	private void updateButtonColor(JButton button, int row, int column) {
 
 		ICell cell = nonograma.getCellOfPlayerPlayboard(row, column);
@@ -343,7 +348,7 @@ public class frmTablero {
 			return;
 		}
 		
-	}
+	}*/
 	
 	private void loadRowHintsPanel(JPanel rowHintsPanel) {
 		
