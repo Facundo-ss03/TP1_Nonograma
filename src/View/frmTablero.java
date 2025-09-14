@@ -78,7 +78,7 @@ public class frmTablero {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
-		buttonsManager = new ButtonsManager(nonograma);
+		buttonsManager = new ButtonsManager(frame, nonograma);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -187,7 +187,7 @@ public class frmTablero {
 		JButton btnVerifySolution = new JButton("Verify");
 		btnVerifySolution.setBounds(10, 17, 80, 35);
 		frame.getContentPane().add(btnVerifySolution);
-		suscribeVerifyButton(btnVerifySolution);
+		buttonsManager.suscribeButtonToVerifyWin(btnVerifySolution);
 		
 		JButton btnRestart = new JButton("Restart");
 		btnRestart.addActionListener(new ActionListener() {
@@ -234,9 +234,9 @@ public class frmTablero {
 		
 		interactivePanel.setLayout(new GridLayout(nonograma.getPlayboardSize(), nonograma.getPlayboardSize(), 0, 0));
 
-		loadRowHintsPanel(rowHintsPanel);
-		loadColumnHintsPanel(columnHintsPanel);
-		loadInteractivePanel(interactivePanel);
+		loadRowHintsPanel();
+		loadColumnHintsPanel();
+		loadInteractivePanel();
 		
 	}
 	
@@ -251,9 +251,8 @@ public class frmTablero {
 			radioButton.addActionListener( e -> {
 				
 				nonograma.changeDifficultyLevel(difficulty);
-				emptyPanels();
-				refreshPanels();
-				loadPanels();
+				
+				restartPanels();
 
 			});
 			
@@ -276,81 +275,31 @@ public class frmTablero {
 		
 	}
 	
-	private void suscribeVerifyButton(JButton verifyButton) {
-		
-		verifyButton.addActionListener( e -> {
-			
-			verifySolution();
-			
-		});
-		
-	}
-	
-	private void verifySolution() {
-	    if (nonograma.askIfSolutionIsCorrect()) {
-	        JOptionPane.showMessageDialog(frame, "¡Ganaste!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-	    } else {
-	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto!", "Resultado", JOptionPane.WARNING_MESSAGE);
-	    }
-	}
-	
-	private void loadInteractivePanel(JPanel panel) {
+	private void loadInteractivePanel() {
 		
 		int playboardSize = nonograma.getPlayboardSize();
 		interactivePanelButtons = new JButton[playboardSize][playboardSize];
 		
-		for(int rowButtons = 0; rowButtons < playboardSize; rowButtons++) {
-			for(int columnButton = 0; columnButton < playboardSize; columnButton++) {
-
-				/*
-				JButton cell = new JButton();
-				cell.setBackground(Color.WHITE);  
-
-				int row = rowButtons;
-				int column = columnButton;
-				
-				cell.addActionListener( e -> {
-					
-					buttonsManager.updateButtonColor(cell, row, column);
-					
-				});
-				*/
-				JButton cell = buttonsManager.createCellButton(rowButtons, columnButton);
-				
-				panel.add(cell);
-				interactivePanelButtons[rowButtons][columnButton] = cell;
-			}	
+		for(int rowOfButtons = 0; rowOfButtons < playboardSize; rowOfButtons++) {
+			
+			loadRowOfInteractivePanel(rowOfButtons, playboardSize);
+			
 		}
 	}
-/*
-	private void updateButtonColor(JButton button, int row, int column) {
-
-		ICell cell = nonograma.getCellOfPlayerPlayboard(row, column);
-
-		if(cell.getCurrentState() == ICell.CellStates.BLANK) {
-
-			nonograma.setCellAsBlack(row, column);
-			button.setBackground(Color.BLACK);
-			return;
-		}
-		
-		if(cell.getCurrentState() == ICell.CellStates.PAINTED) {
-
-			nonograma.setCellAsFlagged(row, column);
-			button.setBackground(Color.RED);
-			return;
-		}
-		
-		if(cell.getCurrentState() == ICell.CellStates.FLAGGED) {
-
-			nonograma.setCellAsBlank(row, column);
-			button.setBackground(Color.WHITE);
-			return;
-		}
-		
-	}*/
 	
-	private void loadRowHintsPanel(JPanel rowHintsPanel) {
+	private void loadRowOfInteractivePanel(int row, int size) {
+		
+		for(int columnButton = 0; columnButton < size; columnButton++) {
+			
+			JButton cell = buttonsManager.createCellButton(row, columnButton);
+			
+			interactivePanel.add(cell);
+			interactivePanelButtons[row][columnButton] = cell;
+		}	
+		
+	} 
+	
+	private void loadRowHintsPanel() {
 		
 		for(int i = 0; i < nonograma.getPlayboardSize(); i++) {
 			
@@ -381,7 +330,7 @@ public class frmTablero {
 		
 	}
 	
-	private void loadColumnHintsPanel(JPanel columnHintsPanel) {
+	private void loadColumnHintsPanel() {
 		
 		for(int i = 0; i < nonograma.getPlayboardSize(); i++) {
 			

@@ -38,21 +38,18 @@ class Cell implements ICell {
 		return currentState;
 	}
 	
-	@Override
 	public void ToBlank() {
 
 		currentState = CellStates.BLANK;
 		
 	}
 	
-	@Override
 	public void ToFlagged() {
 
 		currentState = CellStates.FLAGGED;
 		
 	}
 	
-	@Override
 	public void ToBlack() {
 
 		currentState = CellStates.PAINTED;
