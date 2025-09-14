@@ -92,18 +92,18 @@ public class frmTablero {
 		
 		JRadioButtonMenuItem rdbtnMetal = new JRadioButtonMenuItem("Metal");
 		JRadioButtonMenuItem rdbtnNimbus = new JRadioButtonMenuItem("Nimbus");
-		JRadioButtonMenuItem rdbtnMotif = new JRadioButtonMenuItem("Motif");
+		JRadioButtonMenuItem rdbtnClassic = new JRadioButtonMenuItem("Classic");
 
 		
 		ButtonGroup group = new ButtonGroup();
 		group.add(rdbtnMetal);
 		group.add(rdbtnNimbus);
-		group.add(rdbtnMotif);
+		group.add(rdbtnClassic);
 
 		
 		mnNewMenu.add(rdbtnMetal);
 		mnNewMenu.add(rdbtnNimbus);
-		mnNewMenu.add(rdbtnMotif);
+		mnNewMenu.add(rdbtnClassic);
 		
 
 		JButton pistaButton = new JButton("Pedir Pista");
@@ -152,9 +152,9 @@ public class frmTablero {
 		    }
 		});
 
-		rdbtnMotif.addActionListener(e -> {
+		rdbtnClassic.addActionListener(e -> {
 		    try {
-		    	UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		        SwingUtilities.updateComponentTreeUI(frame);
 		        
 		        interactivePanel.invalidate();
