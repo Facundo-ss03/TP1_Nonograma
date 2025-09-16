@@ -221,10 +221,10 @@ public class frmTablero {
 	    if (result)
 	        JOptionPane.showMessageDialog(frame, "¡Ganaste!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
 	    
-	    if(!result && nonograma.askRemainingAttempts() >= 0)
+	    if(!result && nonograma.askRemainingAttempts() > 0)
 	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto! te quedan " + nonograma.askRemainingAttempts() + " intentos.", "Resultado", JOptionPane.WARNING_MESSAGE); 
 	    
-	    if(!result && nonograma.askRemainingAttempts() < 0) {
+	    if(!result && nonograma.askRemainingAttempts() == 0) {
 	    	
 	    	JOptionPane.showMessageDialog(frame, "¡Perdiste! La solución era la siguiente.", "Resultado", JOptionPane.ERROR_MESSAGE); 
 	    	showSolution();
