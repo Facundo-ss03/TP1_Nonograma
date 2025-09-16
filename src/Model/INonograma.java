@@ -26,9 +26,13 @@ public interface INonograma {
 		
 	public int[] askCorrectHint();
 	
+	public int askremainingattempts();
+	
 	public int getPlayboardSize();
 	
 	public boolean askIfSolutionIsCorrect();
+	
+	public ICell getCellOfSolution(int row, int column);
 	
 	public void restartGame();
 	

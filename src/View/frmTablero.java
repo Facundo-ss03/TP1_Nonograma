@@ -31,7 +31,6 @@ import javax.swing.UIManager;
 
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
-import java.awt.GridBagLayout;
 
 public class frmTablero {
 
@@ -41,7 +40,7 @@ public class frmTablero {
 	private JPanel rowHintsPanel;
 	private JPanel columnHintsPanel;
 	private JButton[][] interactivePanelButtons;
-	private ButtonsManager buttonsManager;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -78,7 +77,6 @@ public class frmTablero {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		nonograma = INonograma.createNonograma(INonograma.DifficultyLevels.EASY);
-		buttonsManager = new ButtonsManager(frame, nonograma);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -187,7 +185,7 @@ public class frmTablero {
 		JButton btnVerifySolution = new JButton("Verify");
 		btnVerifySolution.setBounds(10, 17, 80, 35);
 		frame.getContentPane().add(btnVerifySolution);
-		buttonsManager.suscribeButtonToVerifyWin(btnVerifySolution);
+		suscribeButtonToVerifyWin(btnVerifySolution);
 		
 		JButton btnRestart = new JButton("Restart");
 		btnRestart.addActionListener(new ActionListener() {
@@ -202,6 +200,52 @@ public class frmTablero {
 		btnRestart.setBounds(10, 62, 80, 35);
 		frame.getContentPane().add(btnRestart);
 		
+	}
+	
+
+	public void suscribeButtonToVerifyWin(JButton button) {
+		
+		button.addActionListener( e -> {
+			
+			verifySolution();
+			
+		});
+		
+	}
+	
+	private void verifySolution() {
+		
+		boolean result = nonograma.askIfSolutionIsCorrect();
+		
+	    if (result)
+	        JOptionPane.showMessageDialog(frame, "¡Ganaste!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+	    
+	    if(!result && nonograma.askremainingattempts() >= 0)
+	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto! te quedan " + nonograma.askremainingattempts() + " intentos.", "Resultado", JOptionPane.WARNING_MESSAGE); 
+	    
+	    if(!result && nonograma.askremainingattempts() < 0) {
+	    	
+	    	JOptionPane.showMessageDialog(frame, "¡Perdiste! La solución era la siguiente.", "Resultado", JOptionPane.ERROR_MESSAGE); 
+	    	showSolution();
+	    }
+	    	    
+	}
+	
+	public void showSolution() {
+		
+		for(int row = 0; row < interactivePanelButtons.length; row++) {
+			for(int column = 0; column < interactivePanelButtons.length; column++) {
+				
+				ICell cell = nonograma.getCellOfSolution(row, column);
+
+				if(cell.isBlack())
+				interactivePanelButtons[row][column].setBackground(Color.BLACK);
+				if(cell.isBlank() || cell.isFlagged())
+				interactivePanelButtons[row][column].setBackground(Color.RED);
+				
+				interactivePanelButtons[row][column].setEnabled(false);
+			}	
+		}
 	}
 
 	private void restartPanels() {
@@ -282,22 +326,68 @@ public class frmTablero {
 		
 		for(int rowOfButtons = 0; rowOfButtons < playboardSize; rowOfButtons++) {
 			
-			loadRowOfInteractivePanel(rowOfButtons, playboardSize);
+			loadRow(rowOfButtons, playboardSize);
 			
 		}
 	}
 	
-	private void loadRowOfInteractivePanel(int row, int size) {
+	private void loadRow(int row, int size) {
 		
 		for(int columnButton = 0; columnButton < size; columnButton++) {
 			
-			JButton cell = buttonsManager.createCellButton(row, columnButton);
+			JButton cell = createCellButton(row, columnButton);
 			
 			interactivePanel.add(cell);
 			interactivePanelButtons[row][columnButton] = cell;
 		}	
 		
 	} 
+
+	private JButton createCellButton(int buttonRow, int buttonColumn){
+
+		JButton cell = new JButton();
+		cell.setBackground(Color.WHITE);  
+
+		int row = buttonRow;
+		int column = buttonColumn;
+		
+		cell.addActionListener( e -> {
+			
+			updateButtonColor(cell, row, column);
+			
+		});
+		
+		return cell;
+		
+	}
+	
+
+	private void updateButtonColor(JButton button, int row, int column) {
+
+		ICell cell = nonograma.getCellOfPlayerPlayboard(row, column);
+
+		if(cell.getCurrentState() == ICell.CellStates.BLANK) {
+
+			nonograma.setCellAsBlack(row, column);
+			button.setBackground(Color.BLACK);
+			return;
+		}
+		
+		if(cell.getCurrentState() == ICell.CellStates.PAINTED) {
+
+			nonograma.setCellAsFlagged(row, column);
+			button.setBackground(Color.RED);
+			return;
+		}
+		
+		if(cell.getCurrentState() == ICell.CellStates.FLAGGED) {
+
+			nonograma.setCellAsBlank(row, column);
+			button.setBackground(Color.WHITE);
+			return;
+		}
+	}
+	
 	
 	private void loadRowHintsPanel() {
 		

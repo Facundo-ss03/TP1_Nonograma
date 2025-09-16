@@ -56,18 +56,21 @@ class Cell implements ICell {
 		
 	}
 	
+	@Override
 	public boolean isBlank() {
 
 		return currentState.equals(CellStates.BLANK);
 		
 	}
 	
+	@Override
 	public boolean isFlagged() {
 		
 		return currentState.equals(CellStates.FLAGGED);
 		
 	}
 	
+	@Override
 	public boolean isBlack() {
 
 		return currentState.equals(CellStates.PAINTED);

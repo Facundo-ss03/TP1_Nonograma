@@ -3,8 +3,6 @@ package Model;
 import java.util.List;
 import java.util.Objects;
 
-import Model.ICell.CellStates;
-
 class Playboard {
 
 	private final CellsGrid solutionBoard;
@@ -52,6 +50,12 @@ class Playboard {
 	public Cell getCellOfPlayerPlayboard(int row, int column) {
 		
 		return playerBoard.getCell(row, column);
+		
+	}
+	
+	public Cell getCellOfSolutionPlayboard(int row, int column) {
+		
+		return solutionBoard.getCell(row, column);
 		
 	}
 	
