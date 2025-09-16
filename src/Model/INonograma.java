@@ -26,7 +26,9 @@ public interface INonograma {
 		
 	public int[] askCorrectHint();
 	
-	public int askremainingattempts();
+	public int askRemaningHintsAvaiables();
+	
+	public int askRemainingAttempts();
 	
 	public int getPlayboardSize();
 	

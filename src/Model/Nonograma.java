@@ -5,7 +5,7 @@ import java.util.List;
 class Nonograma implements INonograma {
 
 	private Playboard currentLevel;
-	private int numberOfTracksAvaiables;
+	private int remaningHintsAvaiables;
 	private DifficultyLevels currentDifficulty;
 	private int remaningAttemps;
 	
@@ -14,7 +14,7 @@ class Nonograma implements INonograma {
 		if(difficulty == null)
 			throw new IllegalArgumentException("La dificultad ingresada es null. La dificultad inicial fue: " + difficulty);
 		
-		this.numberOfTracksAvaiables = 3;
+		this.remaningHintsAvaiables = 3;
 		this.remaningAttemps = 3;
 		this.currentDifficulty = difficulty;
 		createPlayboardAccordingToDifficulty();
@@ -50,6 +50,8 @@ class Nonograma implements INonograma {
 
 	@Override
 	public int[] askCorrectHint() {
+		
+		remaningHintsAvaiables -= 1;
     	return currentLevel.darPista(); 
 	}
 
@@ -57,6 +59,7 @@ class Nonograma implements INonograma {
 	public void restartGame() {
 		
 		remaningAttemps = 3;
+		remaningHintsAvaiables = 3;
 		createPlayboardAccordingToDifficulty();
 		
 	}
@@ -131,19 +134,26 @@ class Nonograma implements INonograma {
 		sb.append("Estado actual del juego:\n\n");
 		sb.append(currentLevel.toString());
 		sb.append("\n");
-		sb.append("Número de pistas disponibles: " + numberOfTracksAvaiables);
+		sb.append("Número de pistas disponibles: " + remaningHintsAvaiables);
 		
 		return sb.toString();
 	}
 
 	@Override
-	public int askremainingattempts() {
+	public int askRemainingAttempts() {
 		return remaningAttemps;
 	}
 
 	@Override
 	public ICell getCellOfSolution(int row, int column) {
 		return currentLevel.getCellOfSolutionPlayboard(row, column);
+	}
+
+	@Override
+	public int askRemaningHintsAvaiables() {
+
+		return remaningHintsAvaiables;
+		
 	}
 }
 	

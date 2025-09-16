@@ -107,8 +107,9 @@ public class frmTablero {
 		JButton pistaButton = new JButton("Pedir Pista");
 			menuBar.add(pistaButton);
 			pistaButton.addActionListener(e -> {
-			    int[] pista = nonograma.askCorrectHint();
-			    if (pista != null) {
+			    if(nonograma.askRemaningHintsAvaiables() > 0) {
+			    	
+				    int[] pista = nonograma.askCorrectHint();
 			        int row = pista[0];
 			        int col = pista[1];
 	
@@ -220,10 +221,10 @@ public class frmTablero {
 	    if (result)
 	        JOptionPane.showMessageDialog(frame, "¡Ganaste!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
 	    
-	    if(!result && nonograma.askremainingattempts() >= 0)
-	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto! te quedan " + nonograma.askremainingattempts() + " intentos.", "Resultado", JOptionPane.WARNING_MESSAGE); 
+	    if(!result && nonograma.askRemainingAttempts() >= 0)
+	        JOptionPane.showMessageDialog(frame, "¡Todavía no es correcto! te quedan " + nonograma.askRemainingAttempts() + " intentos.", "Resultado", JOptionPane.WARNING_MESSAGE); 
 	    
-	    if(!result && nonograma.askremainingattempts() < 0) {
+	    if(!result && nonograma.askRemainingAttempts() < 0) {
 	    	
 	    	JOptionPane.showMessageDialog(frame, "¡Perdiste! La solución era la siguiente.", "Resultado", JOptionPane.ERROR_MESSAGE); 
 	    	showSolution();
